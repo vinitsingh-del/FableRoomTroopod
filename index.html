@@ -1398,9 +1398,27 @@
   }
   .stick{
     z-index:200;
+    background:rgba(255,255,255,.86);
+    border-top:1px solid rgba(229,224,216,.95);
   }
   .stick.show{
     transform:translateY(0);
+  }
+  .stick__info b,.stick__price{
+    color:var(--ink);
+    text-shadow:none;
+  }
+  .stick__info small{
+    color:var(--taupe);
+    text-shadow:none;
+  }
+  .atc span,.stick .atc span,.buynow,.btn-ghost,.foot__news button{
+    color:#FFF7EC !important;
+    font-weight:800;
+    text-shadow:0 2px 8px rgba(0,0,0,.75),0 0 2px rgba(0,0,0,.8);
+  }
+  .atc,.stick .atc{
+    letter-spacing:.14em;
   }
 </style>
 </head>
