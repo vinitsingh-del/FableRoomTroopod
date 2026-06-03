@@ -82,8 +82,7 @@
   .pdp>*,.split>*,.dims>*{min-width:0}
   .gallery{position:sticky;top:96px}
   .gallery__main{border-radius:0;overflow:hidden;background:var(--bone-warm);aspect-ratio:3/4.08;position:relative;cursor:zoom-in}
-  .gallery__main.is-wide{aspect-ratio:16/9}
-  .gallery__main.is-video{cursor:default}
+  .gallery__main.is-video{aspect-ratio:16/9;cursor:default}
   .gallery__main.zoom{cursor:zoom-out;touch-action:none}
   .gallery__main::after{content:'';position:absolute;inset:0;background:var(--bone-warm);transform-origin:right;transition:transform 1.15s var(--ease);z-index:4}
   .gallery__main.in::after{transform:scaleX(0)}
@@ -940,6 +939,77 @@
     .hero__title{padding:22px 20px 42px}
     .hero__title h1{font-size:clamp(27px,8.4vw,36px);line-height:1.08;max-width:10ch}
   }
+
+  /* ===== Hero reset: stable framed video in PDP ===== */
+  @media(min-width:981px){
+    .pdp{
+      grid-template-columns:minmax(0,1.12fr) minmax(380px,.88fr);
+      gap:58px;
+      align-items:center;
+      padding-top:50px;
+      min-height:calc(100svh - 112px);
+    }
+    .gallery{
+      position:sticky;
+      top:96px;
+      width:auto;
+      max-width:none;
+      justify-self:auto;
+    }
+    .gallery__main.is-video{
+      aspect-ratio:16/9;
+      border-radius:18px;
+      background:
+        radial-gradient(72% 60% at 50% 45%,rgba(255,255,255,.12),rgba(23,18,15,.18)),
+        var(--ink);
+      box-shadow:0 42px 100px rgba(23,18,15,.18),0 2px 0 rgba(255,255,255,.62) inset;
+    }
+    .gallery__main.is-video video{
+      object-fit:contain;
+      padding:0;
+    }
+    .gallery__main.is-video .gallery__hint{display:none}
+    .gallery__main.is-video .hero__title{padding:24px 28px 26px}
+    .gallery__main.is-video .hero__title h1{
+      font-size:clamp(30px,3.4vw,48px);
+      line-height:1.04;
+      max-width:11ch;
+    }
+    .buy{
+      position:relative;
+      right:auto;
+      top:auto;
+      transform:none;
+      width:auto;
+      max-width:520px;
+      justify-self:end;
+      padding:34px;
+    }
+  }
+  @media(max-width:560px){
+    .gallery__main.is-video{
+      width:100%;
+      height:80svh;
+      min-height:520px;
+      max-height:690px;
+      margin-left:0;
+      margin-right:0;
+      border-radius:16px;
+      aspect-ratio:auto;
+      background:var(--ink);
+      box-shadow:0 28px 70px rgba(23,18,15,.18);
+    }
+    .gallery__main.is-video video{object-fit:contain}
+    .gallery__main.is-video .hero__title{
+      padding:22px 20px 34px;
+    }
+    .gallery__main.is-video .hero__title h1{
+      font-size:clamp(27px,8vw,35px);
+      line-height:1.08;
+      max-width:10ch;
+    }
+    .thumbs{margin-left:0;margin-right:0;padding-left:0;padding-right:0}
+  }
 </style>
 </head>
 <body>
@@ -977,7 +1047,7 @@
   <div class="pdp">
     <!-- Gallery -->
     <div class="gallery">
-      <div class="gallery__main reveal is-wide is-video">
+      <div class="gallery__main reveal is-video">
         <div class="hero__scrim"></div>
         <span class="gallery__hint">Tap &amp; hold to zoom</span>
         <div class="hero__depth" aria-hidden="true">
@@ -1414,7 +1484,7 @@ function fadeToImage(src,index){
 }
 function fadeToVideo(){
   heroMode='video';
-  stage.classList.add('is-video','is-wide');
+  stage.classList.add('is-video');
   if(heroTimer) clearTimeout(heroTimer);
   zoomOut();
   main.classList.add('hero-media--hidden');
