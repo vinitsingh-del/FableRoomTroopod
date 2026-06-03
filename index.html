@@ -90,18 +90,21 @@
     transition:transform .4s var(--ease-soft),opacity .4s ease;will-change:transform}
   .gallery__main video{
     position:absolute;
-    inset:0;
+    top:0;
+    bottom:0;
+    left:50%;
+    width:300%;
     z-index:2;
-    background:
-      radial-gradient(80% 68% at 50% 48%,rgba(255,255,255,.1),rgba(23,18,15,.2)),
-      var(--ink);
-    object-fit:contain;
+    max-width:none;
+    background:transparent;
+    object-fit:cover;
     object-position:center center;
-    transform:none;
+    transform:translateX(-50%);
   }
-  .gallery__main.is-video .hero__scrim{
-    background:linear-gradient(to top,rgba(23,18,15,.58) 0%,rgba(23,18,15,.12) 38%,transparent 68%);
-  }
+  .gallery__main.is-video .hero__scrim,
+  .gallery__main.is-video .hero__title,
+  .gallery__main.is-video .hero__depth,
+  .gallery__main.is-video .gallery__hint{display:none}
   .hero-media--hidden{opacity:0;visibility:hidden;pointer-events:none}
   .gallery__main.zoom img,.gallery__main.zoom video{transition:transform .1s linear}
   .gallery__hint{position:absolute;top:14px;right:14px;z-index:3;background:rgba(23,18,15,.55);color:#fff;font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;padding:6px 11px;border-radius:20px;backdrop-filter:blur(6px);transition:opacity .4s ease;pointer-events:none}
@@ -965,15 +968,8 @@
       box-shadow:0 42px 100px rgba(23,18,15,.18),0 2px 0 rgba(255,255,255,.62) inset;
     }
     .gallery__main.is-video video{
-      object-fit:contain;
+      object-fit:cover;
       padding:0;
-    }
-    .gallery__main.is-video .gallery__hint{display:none}
-    .gallery__main.is-video .hero__title{padding:24px 28px 26px}
-    .gallery__main.is-video .hero__title h1{
-      font-size:clamp(30px,3.4vw,48px);
-      line-height:1.04;
-      max-width:11ch;
     }
     .buy{
       position:relative;
@@ -999,15 +995,7 @@
       background:var(--ink);
       box-shadow:0 28px 70px rgba(23,18,15,.18);
     }
-    .gallery__main.is-video video{object-fit:contain}
-    .gallery__main.is-video .hero__title{
-      padding:22px 20px 34px;
-    }
-    .gallery__main.is-video .hero__title h1{
-      font-size:clamp(27px,8vw,35px);
-      line-height:1.08;
-      max-width:10ch;
-    }
+    .gallery__main.is-video video{object-fit:cover}
     .thumbs{margin-left:0;margin-right:0;padding-left:0;padding-right:0}
   }
 </style>
@@ -1454,7 +1442,7 @@ function panTo(e){
   const y=Math.max(0,Math.min(100,((e.clientY-r.top)/r.height)*100));
   activeHeroMedia().style.transformOrigin=x+'% '+y+'%';
 }
-function zoomIn(e){zoomed=true;stage.classList.add('zoom');panTo(e);activeHeroMedia().style.transform='scale('+ZOOM+')';}
+function zoomIn(e){if(heroMode==='video')return;zoomed=true;stage.classList.add('zoom');panTo(e);activeHeroMedia().style.transform='scale('+ZOOM+')';}
 function zoomOut(){
   zoomed=false;stage.classList.remove('zoom');
   [main,heroVideo].filter(Boolean).forEach(el=>{el.style.transform='';el.style.transformOrigin='center';});
