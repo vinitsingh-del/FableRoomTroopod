@@ -1083,6 +1083,210 @@
       line-height:1.06;
     }
   }
+
+  /* ===== Final PDP buy card alignment ===== */
+  .buy{
+    display:grid;
+    gap:15px;
+    align-content:start;
+    width:100%;
+  }
+  .buy .reveal{
+    opacity:1;
+    transform:none;
+  }
+  .rating{
+    margin:0;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    padding-bottom:14px;
+    border-bottom:1px solid var(--line);
+  }
+  .rating .stars,
+  .rating strong{
+    font-size:13px;
+    line-height:1;
+    font-weight:700;
+    letter-spacing:.08em;
+    color:var(--brass);
+  }
+  .rating__note{
+    margin-left:auto;
+    text-align:right;
+    font-size:12px;
+    color:var(--muted);
+  }
+  .price{
+    margin:0;
+    display:flex;
+    align-items:end;
+    justify-content:space-between;
+    gap:18px;
+  }
+  .price b{
+    font-size:clamp(42px,4.4vw,56px);
+    line-height:.9;
+  }
+  .price .vat{
+    padding-bottom:5px;
+    text-align:right;
+    white-space:nowrap;
+  }
+  .klarna{
+    margin:0;
+    width:100%;
+    justify-content:center;
+    text-align:center;
+    min-height:40px;
+    border-radius:6px;
+  }
+  .exclusive{
+    margin:0;
+    padding:0 0 15px;
+    border-bottom:1px solid var(--line);
+    line-height:1.45;
+  }
+  .spec{
+    margin:0;
+    border-top:0;
+  }
+  .spec__row{
+    min-height:45px;
+    padding:11px 0;
+    align-items:center;
+  }
+  .spec__row dt{
+    flex:0 0 40%;
+  }
+  .spec__row dd{
+    flex:1;
+    font-size:18px;
+  }
+  .variant{
+    margin:0;
+    display:grid;
+    grid-template-columns:1fr auto;
+    align-items:center;
+    gap:16px;
+    padding-top:0;
+  }
+  .variant span{
+    margin:0;
+  }
+  .swatch{
+    min-width:132px;
+    justify-content:center;
+    border-radius:6px;
+    box-shadow:none;
+  }
+  .qtyrow{
+    margin:0;
+    display:grid;
+    grid-template-columns:126px minmax(0,1fr);
+    gap:12px;
+  }
+  .qty{
+    height:54px;
+    border-radius:6px;
+  }
+  .qty button{
+    height:54px;
+  }
+  .qty input{
+    height:54px;
+    flex:1;
+  }
+  .atc,.buynow{
+    min-height:54px;
+    border-radius:6px;
+  }
+  .buynow{
+    margin-top:-6px;
+  }
+  .assure{
+    display:none;
+  }
+  @media(min-width:981px){
+    .pdp:has(.gallery__main.is-video){
+      grid-template-columns:minmax(320px,420px) minmax(440px,520px);
+      justify-content:center;
+      gap:76px;
+    }
+    .buy{
+      max-width:520px;
+      padding:30px;
+      align-self:center;
+      justify-self:start;
+    }
+  }
+  @media(max-width:720px){
+    .buy{
+      max-width:520px;
+      margin:0 auto;
+      padding:24px 20px;
+      background:rgba(255,255,255,.78);
+      border:1px solid rgba(229,224,216,.86);
+      border-radius:16px;
+      box-shadow:0 24px 64px rgba(23,18,15,.08);
+    }
+    .rating{
+      flex-wrap:wrap;
+      justify-content:flex-start;
+      row-gap:8px;
+    }
+    .rating__note{
+      width:100%;
+      margin-left:0;
+      text-align:left;
+    }
+    .price{
+      align-items:baseline;
+    }
+    .price b{
+      font-size:44px;
+    }
+    .spec__row dd{
+      max-width:none;
+      font-size:17px;
+    }
+    .variant{
+      grid-template-columns:1fr;
+      justify-items:start;
+    }
+    .qtyrow{
+      grid-template-columns:1fr;
+    }
+    .qty{
+      justify-content:space-between;
+    }
+    .assure{
+      grid-template-columns:1fr;
+    }
+  }
+
+  /* ===== Repeated card symmetry ===== */
+  .triad,.revcards{
+    align-items:stretch;
+  }
+  .craftcard,.revcard,.woodcard{
+    height:100%;
+  }
+  .craftcard{
+    display:grid;
+    grid-template-rows:auto 1fr;
+  }
+  .craftcard__body{
+    display:flex;
+    flex-direction:column;
+  }
+  .craftcard__body p{
+    margin-top:auto;
+  }
+  .split,.dims{
+    justify-items:stretch;
+  }
 </style>
 </head>
 <body>
@@ -1141,7 +1345,7 @@
     <!-- Buy box -->
     <div class="buy">
       <div class="rating reveal">
-        <span class="stars">5.0</span>
+        <span class="stars">Rated</span>
         <strong data-count="5" data-dec="1">5.0</strong>
         <span class="rating__note">Loved by early customers</span>
       </div>
@@ -1174,11 +1378,6 @@
       </div>
       <button class="buynow" id="buynow">Buy it now</button>
 
-      <div class="assure reveal reveal-d4">
-        <div>Free UK delivery</div>
-        <div>Minimal assembly</div>
-        <div>30-day returns</div>
-      </div>
     </div>
   </div>
 </section>
