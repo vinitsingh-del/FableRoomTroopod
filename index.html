@@ -194,6 +194,7 @@
     position:relative;
     overflow:clip;
     isolation:isolate;
+    transform:translateZ(0);
   }
   .parallax-story::before{
     content:'';
@@ -255,6 +256,7 @@
     min-height:650px;
     position:relative;
     perspective:1200px;
+    transform:translateZ(0);
   }
   .px-card{
     position:absolute;
@@ -264,6 +266,7 @@
     background:var(--bone-warm);
     box-shadow:0 36px 90px rgba(0,0,0,.38);
     will-change:transform;
+    backface-visibility:hidden;
   }
   .px-card img{
     width:100%;
@@ -301,6 +304,7 @@
     border:1px solid rgba(232,201,164,.32);
     box-shadow:inset 0 0 0 1px rgba(255,255,255,.04);
     will-change:transform;
+    backface-visibility:hidden;
   }
   .px-disk--one{width:230px;height:230px;right:11%;top:7%;background:rgba(183,126,69,.08)}
   .px-disk--two{width:92px;height:92px;left:19%;bottom:18%;background:rgba(242,236,227,.04)}
@@ -319,6 +323,7 @@
     font-size:20px;
     line-height:1.25;
     will-change:transform;
+    backface-visibility:hidden;
   }
   .px-label small{
     display:block;
@@ -755,6 +760,102 @@
     .exp{padding:70px 0 76px}
     .exp__stage{aspect-ratio:4/4.6;border-radius:8px}
   }
+  @media(hover:none),(pointer:coarse){
+    .gallery__main,.exp__stage{touch-action:pan-y}
+    .parallax-story::before{background-attachment:scroll}
+    .px-card,.px-disk,.px-label,[data-px]{will-change:auto}
+  }
+
+  /* ===== Responsive refinement pass ===== */
+  @media(min-width:1180px){
+    .pdp{gap:72px}
+    .gallery__main{max-height:760px}
+    .buy{max-width:520px;justify-self:end}
+  }
+  @media(max-width:980px){
+    .ticker__track{animation-duration:42s}
+    .pdp{padding:32px 0 58px}
+    .gallery__main{max-height:none}
+    .buy{max-width:720px;margin:0 auto;width:100%}
+    .trustbar__inner{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px}
+    .trust{padding:0 10px}
+    .trust+.trust::before{display:none}
+    .parallax-pin{min-height:auto}
+    .parallax-scene{min-height:500px}
+    .closing{padding:88px 0}
+  }
+  @media(max-width:720px){
+    .wrap{padding-left:20px;padding-right:20px}
+    .ticker{font-size:10px;letter-spacing:.1em}
+    .ticker span{padding:0 18px}
+    .nav__icons a:last-child{font-size:0;gap:0}
+    .nav__icons a:last-child .cart-dot{font-size:10px}
+    .pdp{gap:24px;padding-bottom:48px}
+    .gallery__main{
+      width:100%;
+      height:auto;
+      aspect-ratio:4/3;
+      min-height:0;
+    }
+    .hero__title{padding-bottom:34px}
+    .thumbs{
+      margin:12px calc(50% - 50vw) 0;
+      padding:0 18px 8px;
+      scroll-padding-inline:18px;
+    }
+    .thumbs button{flex-basis:72px}
+    .buy h1,.buy__sub{display:block}
+    .rating{flex-wrap:wrap;row-gap:4px;margin-top:4px}
+    .price{margin-top:4px}
+    .price b{font-size:40px}
+    .klarna{width:100%;justify-content:center;text-align:center}
+    .spec__row{align-items:flex-start}
+    .spec__row dd{font-size:16px;max-width:52%}
+    .qtyrow{display:grid;grid-template-columns:132px minmax(0,1fr)}
+    .qty,.qty button{height:54px}
+    .atc,.buynow{min-height:54px}
+    .assure{grid-template-columns:1fr;gap:12px;margin-top:22px}
+    .assure div{flex-direction:row;justify-content:center}
+    .trustbar__inner{grid-template-columns:repeat(2,minmax(0,1fr));padding:28px 20px}
+    .parallax-shell{width:calc(100vw - 40px)}
+    .parallax-copy{text-align:left}
+    .parallax-meta{grid-template-columns:1fr 1fr}
+    .parallax-scene{min-height:430px}
+    .px-card--hero{width:min(76vw,340px)}
+    .px-card--left{width:34vw;top:8%}
+    .px-card--right{width:30vw;bottom:10%}
+    .px-disk,.px-label{display:none}
+    .split__media,.dims__fig{aspect-ratio:4/3.75}
+    .triad{gap:18px;margin-top:36px}
+    .craftcard__body{padding:22px 20px 24px}
+    .acc__head{font-size:15px;padding:19px 2px}
+    .closing h2{font-size:clamp(36px,11vw,52px)}
+    .closing__cta{gap:18px}
+    .btn-ghost{width:100%;justify-content:center;padding:17px 22px}
+    .exp__head{padding:0 20px}
+    footer{padding-bottom:92px}
+  }
+  @media(max-width:430px){
+    .wrap{padding-left:18px;padding-right:18px}
+    .nav__logo img{height:18px}
+    header.shrink .nav__logo img{height:17px}
+    .gallery__main{
+      height:clamp(500px,74svh,620px);
+      margin-left:calc(50% - 50vw);
+      margin-right:calc(50% - 50vw);
+      width:100vw;
+    }
+    .hero__depth span:nth-child(n+3){display:none}
+    .hero__title h1{font-size:clamp(31px,9.2vw,38px)}
+    .buy{padding-top:18px}
+    .qtyrow{grid-template-columns:1fr}
+    .qty{justify-content:space-between}
+    .qty input{flex:1}
+    .parallax-meta{grid-template-columns:1fr}
+    .parallax-scene{min-height:390px}
+    .stick__price{display:none}
+    .stick .atc{padding:12px 16px;min-width:118px}
+  }
 </style>
 </head>
 <body>
@@ -1054,7 +1155,7 @@
 </section>
 
 <!-- CLOSING CTA -->
-<section class="sec--navy">
+<section class="sec--navy" id="closingCta" data-priority-block>
   <div class="wrap closing reveal">
     <span class="closing__mark">FABLEROOM</span>
     <div class="closing__rule"></div>
@@ -1069,7 +1170,7 @@
 </section>
 
 <!-- EXPERIENCE THE PRODUCT (zoom) -->
-<section class="exp" id="experience">
+<section class="exp" id="experience" data-priority-block>
   <div class="exp__head reveal">
     <span class="eyebrow">Experience Monit</span>
     <h2>Get closer.<br>Explore every grain.</h2>
@@ -1082,7 +1183,7 @@
 </section>
 
 <!-- REVIEWS (wooden marquee, below CTA) -->
-<section class="revband" id="reviews">
+<section class="revband" id="reviews" data-priority-block>
   <div class="revband__head reveal">
     <span class="eyebrow">Loved by early customers</span>
     <div class="revband__score"><span class="stars">★★★★★</span> <b data-count="5" data-dec="1">5.0</b></div>
@@ -1141,8 +1242,15 @@
 <div class="toast" id="toast"> Added to your bag</div>
 
 <script>
+/* ---- Move conversion sections up into the first story arc ---- */
+const priorityAnchor=document.getElementById('parallaxStory');
+const priorityBlocks=[...document.querySelectorAll('[data-priority-block]')];
+if(priorityAnchor && priorityBlocks.length){
+  priorityBlocks.reverse().forEach(block=>priorityAnchor.insertAdjacentElement('afterend',block));
+}
+
 /* ---- Reveal on scroll (Framer-style) ---- */
-const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.14,rootMargin:'0px 0px -8% 0px'});
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.1,rootMargin:'0px 0px -12% 0px'});
 const _revEls=[...document.querySelectorAll('.reveal,.mask')];
 const startReveals=()=>_revEls.forEach(el=>io.observe(el));
 if(window.matchMedia && matchMedia('(prefers-reduced-motion:reduce)').matches){
@@ -1335,44 +1443,64 @@ document.querySelectorAll('.acc').forEach(acc=>{
   }
 })();
 
-/* ---- Parallax engine (mobile-tuned, rAF, reduced-motion aware) ---- */
+/* ---- Parallax engine (mobile/desktop tuned, eased rAF, reduced-motion aware) ---- */
 (function(){
   const reduce = window.matchMedia && matchMedia('(prefers-reduced-motion:reduce)').matches;
+  const coarse = window.matchMedia && matchMedia('(hover:none), (pointer:coarse)').matches;
   const imageEls = [...document.querySelectorAll('[data-px]')];
   const depthEls = [...document.querySelectorAll('[data-depth]')];
   if(reduce || (!imageEls.length && !depthEls.length)) return;
-  let ticking=false;
+  const states = new WeakMap();
+  const ease = coarse ? 0.18 : 0.12;
+  let ticking=false, needsAnotherFrame=false;
   function baseTransform(el){
     if(el.classList.contains('px-card--hero')) return 'translate(-50%,-50%)';
     return '';
   }
+  function state(el){
+    if(!states.has(el)) states.set(el,{x:0,y:0,r:parseFloat(el.dataset.rotate)||0,scale:parseFloat(el.dataset.pxs)||1});
+    return states.get(el);
+  }
+  function mix(a,b,p){return a+(b-a)*p}
+  function keepGoing(current,target){return Math.abs(current-target) > 0.08}
   function frame(){
     const vh = window.innerHeight;
+    needsAnotherFrame=false;
     for(const el of imageEls){
       const r = el.getBoundingClientRect();
       if(r.bottom < -120 || r.top > vh+120) continue;
-      const speed = parseFloat(el.dataset.px) || 0;
-      const sc = el.dataset.pxs || '1';
+      const s = state(el);
+      const speed = (parseFloat(el.dataset.px) || 0) * (coarse ? 0.55 : 1);
+      const sc = parseFloat(el.dataset.pxs) || 1;
       const p = (r.top + r.height/2 - vh/2) / vh;   // ~ -0.6..0.6 while crossing
-      const ty = (-p * speed * vh).toFixed(1);
-      el.style.transform = `translate3d(0,${ty}px,0) scale(${sc})`;
+      const targetY = -p * speed * vh;
+      needsAnotherFrame = needsAnotherFrame || keepGoing(s.y,targetY) || keepGoing(s.scale,sc);
+      s.y = mix(s.y,targetY,ease);
+      s.scale = mix(s.scale,sc,ease);
+      el.style.transform = `translate3d(0,${s.y.toFixed(1)}px,0) scale(${s.scale.toFixed(3)})`;
     }
     for(const el of depthEls){
       const parent = el.closest('.parallax-story') || el;
       const r = parent.getBoundingClientRect();
       if(r.bottom < -160 || r.top > vh+160) continue;
+      const s = state(el);
       const progress = Math.max(-1,Math.min(1,(r.top + r.height/2 - vh/2) / vh));
-      const depth = parseFloat(el.dataset.depth) || 0;
+      const depth = (parseFloat(el.dataset.depth) || 0) * (coarse ? 0.62 : 1);
       const rotate = parseFloat(el.dataset.rotate) || 0;
-      const ty = (-progress * depth * vh * 1.2).toFixed(1);
-      const tx = (progress * depth * 38).toFixed(1);
-      const rz = (rotate + progress * depth * 10).toFixed(2);
+      const targetY = -progress * depth * vh * 1.2;
+      const targetX = progress * depth * 38;
+      const targetR = rotate + progress * depth * 10;
+      needsAnotherFrame = needsAnotherFrame || keepGoing(s.y,targetY) || keepGoing(s.x,targetX) || keepGoing(s.r,targetR);
+      s.y = mix(s.y,targetY,ease);
+      s.x = mix(s.x,targetX,ease);
+      s.r = mix(s.r,targetR,ease);
       const base = baseTransform(el);
-      el.style.transform = `${base} translate3d(${tx}px,${ty}px,0) rotate(${rz}deg)`;
+      el.style.transform = `${base} translate3d(${s.x.toFixed(1)}px,${s.y.toFixed(1)}px,0) rotate(${s.r.toFixed(2)}deg)`;
     }
-    ticking=false;
+    if(needsAnotherFrame) requestAnimationFrame(frame);
+    else ticking=false;
   }
-  function onScroll(){ if(!ticking){ ticking=true; requestAnimationFrame(frame); } }
+  function onScroll(){ if(!ticking){ ticking=true; needsAnotherFrame=true; requestAnimationFrame(frame); } }
   window.addEventListener('scroll', onScroll, {passive:true});
   window.addEventListener('resize', onScroll, {passive:true});
   // settle parallax again after iOS momentum scroll ends
