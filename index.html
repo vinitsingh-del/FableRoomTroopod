@@ -87,7 +87,14 @@
   .gallery__main.in::after{transform:scaleX(0)}
   .gallery__main img,.gallery__main video{width:100%;height:100%;object-fit:cover;transform-origin:center;
     transition:transform .4s var(--ease-soft),opacity .4s ease;will-change:transform}
-  .gallery__main video{position:absolute;inset:0;z-index:2;background:var(--bone-warm)}
+  .gallery__main video{
+    position:absolute;
+    inset:0;
+    z-index:2;
+    background:var(--bone-warm);
+    object-position:center 42%;
+    transform:scale(1.11);
+  }
   .hero-media--hidden{opacity:0;visibility:hidden;pointer-events:none}
   .gallery__main.zoom img,.gallery__main.zoom video{transition:transform .1s linear}
   .gallery__hint{position:absolute;top:14px;right:14px;z-index:3;background:rgba(23,18,15,.55);color:#fff;font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;padding:6px 11px;border-radius:20px;backdrop-filter:blur(6px);transition:opacity .4s ease;pointer-events:none}
