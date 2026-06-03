@@ -1325,6 +1325,57 @@
   .split,.dims{
     justify-items:stretch;
   }
+
+  /* ===== Final glow, wood buttons, review typography ===== */
+  :where(.hero__title h1,.lede h2,.parallax-copy h2,.split__text h3,.craftcard h4,.closing h2,.exp__head h2,.buy h1,.serif){
+    text-shadow:0 0 24px rgba(232,201,164,.18),0 10px 34px rgba(23,18,15,.10);
+  }
+  :where(.eyebrow,.lede p,.parallax-copy p,.split__text p,.closing p,.exp__head p,.rating__note,.exclusive){
+    text-shadow:0 0 18px rgba(232,201,164,.16);
+  }
+  .sec--ink :where(h2,h3,h4,p,.eyebrow),
+  .sec--navy :where(h2,h3,h4,p,.eyebrow),
+  .parallax-story :where(h2,p,.eyebrow){
+    text-shadow:0 0 22px rgba(232,201,164,.28),0 12px 38px rgba(0,0,0,.28);
+  }
+  .atc,.buynow,.btn-ghost,.stick .atc,.foot__news button{
+    background:
+      linear-gradient(90deg,rgba(24,14,8,.62),rgba(101,58,31,.34) 42%,rgba(33,18,10,.68)),
+      linear-gradient(180deg,rgba(255,255,255,.12),rgba(0,0,0,.16)),
+      url('https://fableroom.com/cdn/shop/files/FRST00017A_8.png?width=1200') center/cover !important;
+    color:#fff;
+    border:1px solid rgba(232,201,164,.42);
+    box-shadow:0 18px 42px rgba(74,42,23,.32),inset 0 1px 0 rgba(255,255,255,.18),inset 0 -18px 28px rgba(23,12,7,.24);
+    text-shadow:0 1px 12px rgba(0,0,0,.44);
+  }
+  .atc:hover,.buynow:hover,.btn-ghost:hover,.stick .atc:hover,.foot__news button:hover{
+    background:
+      linear-gradient(90deg,rgba(18,10,6,.7),rgba(117,67,36,.42) 45%,rgba(24,14,8,.76)),
+      linear-gradient(180deg,rgba(255,255,255,.16),rgba(0,0,0,.18)),
+      url('https://fableroom.com/cdn/shop/files/FRST00017A_7.png?width=1200') center/cover !important;
+  }
+  .woodcard{
+    padding:24px 22px 22px;
+  }
+  .woodcard .stars{
+    font-weight:800;
+    font-size:13px;
+    letter-spacing:.14em;
+    opacity:1;
+    text-shadow:0 2px 16px rgba(0,0,0,.38);
+  }
+  .woodcard p{
+    font-weight:700;
+    font-size:17px;
+    line-height:1.36;
+    opacity:1;
+    text-shadow:0 2px 18px rgba(0,0,0,.52);
+  }
+  .woodcard .who{
+    font-weight:800;
+    opacity:.9;
+    text-shadow:0 2px 14px rgba(0,0,0,.44);
+  }
 </style>
 </head>
 <body>
