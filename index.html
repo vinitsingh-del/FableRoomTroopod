@@ -1448,7 +1448,7 @@
     <div class="nav__icons">
       <a href="#">Search</a>
       <a href="#">Account</a>
-      <a href="#">Bag <span class="cart-dot" id="cartCount">0</span></a>
+      <a href="#">Home <span class="cart-dot" id="cartCount">0</span></a>
     </div>
   </div>
 </header>
@@ -1508,7 +1508,7 @@
           <input id="qty" value="1" inputmode="numeric" aria-label="quantity">
           <button id="plus" aria-label="increase">+</button>
         </div>
-        <button class="atc" id="atc"><span>Add to bag</span></button>
+        <button class="atc" id="atc"><span>Add to your home</span></button>
       </div>
       <button class="buynow" id="buynow">Buy it now</button>
 
@@ -1723,7 +1723,7 @@
         <h2>Bring a little calm<br>to your bedside.</h2>
         <p>Solid mango wood, a warm walnut finish, two quiet drawers. A FABLEROOM original at £189, with free UK delivery.</p>
         <div class="closing__cta">
-          <a href="#" class="btn-ghost" id="ctaAdd">Add to bag, £189</a>
+          <a href="#" class="btn-ghost" id="ctaAdd">Add to your home, £189</a>
           <a href="#" class="closing__link">Explore the collection</a>
         </div>
       </div>
@@ -1795,13 +1795,13 @@
     </div>
     <div class="stick__cta">
       <span class="stick__price">£189</span>
-      <button class="atc" id="stickAtc"><span>Add to bag</span></button>
+      <button class="atc" id="stickAtc"><span>Add to your home</span></button>
     </div>
   </div>
 </div>
 
 <!-- Toast -->
-<div class="toast" id="toast"> Added to your bag</div>
+<div class="toast" id="toast"> Added to your home</div>
 
 <script>
 /* ---- Move conversion sections up into the first story arc ---- */
@@ -1937,7 +1937,7 @@ document.getElementById('plus').onclick=()=>q.value=clamp(+q.value+1);
 document.getElementById('minus').onclick=()=>q.value=clamp(+q.value-1);
 q.oninput=()=>q.value=q.value.replace(/[^0-9]/g,'');
 
-/* ---- Add to bag ---- */
+/* ---- Add to your home ---- */
 let count=0; const cc=document.getElementById('cartCount'), toast=document.getElementById('toast');
 function addBag(){
   count+=clamp(+q.value); cc.textContent=count;
