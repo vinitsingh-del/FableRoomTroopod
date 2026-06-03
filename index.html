@@ -777,6 +777,7 @@
   .loader__inner{display:flex;flex-direction:column;align-items:center;gap:22px;transition:opacity .5s ease,transform .8s var(--ease)}
   .loader.done .loader__inner{opacity:0;transform:translateY(-14px)}
   .loader__brand{font-family:var(--serif);color:#EDE6DC;font-size:clamp(26px,6vw,42px);letter-spacing:.4em;text-indent:.4em;font-weight:400}
+  .loader__sub{margin-top:-10px;color:#D8C5AC;font-size:11px;letter-spacing:.28em;text-indent:.28em;text-transform:uppercase;font-weight:600}
   .loader__bar{width:130px;height:1px;background:rgba(255,255,255,.16);overflow:hidden;position:relative}
   .loader__bar i{position:absolute;inset:0;background:var(--brass);transform:scaleX(0);transform-origin:left;animation:loadbar 1.2s var(--ease) forwards}
   @keyframes loadbar{to{transform:scaleX(1)}}
@@ -1425,7 +1426,7 @@
 <body>
 
 <!-- Premium chrome -->
-<div class="loader" id="loader"><div class="loader__inner"><span class="loader__brand">FABLEROOM</span><span class="loader__bar"><i></i></span></div></div>
+<div class="loader" id="loader"><div class="loader__inner"><span class="loader__brand">FABLEROOM</span><span class="loader__sub">Digital Experience Showroom</span><span class="loader__bar"><i></i></span></div></div>
 <div class="grain" aria-hidden="true"></div>
 <div class="progress" id="progress"></div>
 
