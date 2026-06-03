@@ -6,7 +6,7 @@
 <title>Monit Two Drawer Bedside Table - FABLEROOM</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- Cormorant Garamond ≈ IvyPresto Display (brand display serif) · Hanken Grotesk ≈ HK Grotesk (brand body) -->
+<!-- Cormorant Garamond approximates IvyPresto Display. Hanken Grotesk approximates HK Grotesk. -->
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
@@ -58,7 +58,7 @@
   .ticker{background:var(--ink);color:#EDE6DC;font-size:12px;letter-spacing:.14em;text-transform:uppercase;overflow:hidden;white-space:nowrap;border-bottom:1px solid rgba(255,255,255,.06)}
   .ticker__track{display:inline-flex;gap:0;animation:slide 34s linear infinite;padding:9px 0}
   .ticker span{padding:0 26px;position:relative;font-weight:500}
-  .ticker span::after{content:'·';position:absolute;right:-3px;color:var(--brass)}
+  .ticker span::after{content:'';position:absolute;right:-3px;width:1px;height:12px;top:50%;transform:translateY(-50%);background:rgba(183,126,69,.55)}
   @keyframes slide{to{transform:translateX(-50%)}}
 
   /* ---------- Header ---------- */
@@ -91,9 +91,12 @@
     position:absolute;
     inset:0;
     z-index:2;
-    background:var(--bone-warm);
-    object-position:center 42%;
-    transform:scale(1.11);
+    background:
+      radial-gradient(80% 68% at 50% 48%,rgba(255,255,255,.1),rgba(23,18,15,.2)),
+      var(--ink);
+    object-fit:contain;
+    object-position:center center;
+    transform:none;
   }
   .hero-media--hidden{opacity:0;visibility:hidden;pointer-events:none}
   .gallery__main.zoom img,.gallery__main.zoom video{transition:transform .1s linear}
@@ -105,7 +108,7 @@
     opacity:0;transform:translateY(18px);transition:opacity 1s var(--ease) .5s,transform 1s var(--ease) .5s}
   .gallery__main.in .hero__title{opacity:1;transform:none}
   .hero__title .eyebrow{color:#E8C9A4;display:block;margin-bottom:11px}
-  .hero__title h1{font-family:var(--serif);font-weight:400;font-size:clamp(38px,4.8vw,60px);line-height:.98;letter-spacing:-.015em;color:#fff}
+  .hero__title h1{font-family:var(--serif);font-weight:400;font-size:clamp(36px,4.5vw,58px);line-height:1.02;letter-spacing:0;color:#fff;max-width:11ch}
 
   .thumbs{display:flex;gap:11px;margin-top:13px;overflow-x:auto;scroll-snap-type:x mandatory;
     padding-bottom:6px;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
@@ -713,8 +716,8 @@
     header.shrink .nav__logo img{height:15px}
     .nav__icons{gap:16px;font-size:12.5px}
     .nav__icons a:not(:last-child){display:none}
-    .hero__title{padding:24px 22px 64px}
-    .hero__title h1{font-size:clamp(30px,8.4vw,40px);line-height:1.06}
+    .hero__title{padding:24px 22px 48px}
+    .hero__title h1{font-size:clamp(28px,8vw,38px);line-height:1.08;max-width:10.5ch}
     .gallery__hint{top:12px;right:12px;font-size:9px;padding:5px 9px}
     .exclusive{font-size:14px;margin-bottom:22px}
     .assure{gap:10px}
@@ -849,13 +852,18 @@
     .nav__logo img{height:18px}
     header.shrink .nav__logo img{height:17px}
     .gallery__main{
-      height:clamp(500px,74svh,620px);
+      height:80svh;
+      min-height:560px;
+      max-height:720px;
+      aspect-ratio:auto;
       margin-left:calc(50% - 50vw);
       margin-right:calc(50% - 50vw);
       width:100vw;
     }
+    .gallery__main video{object-fit:contain}
     .hero__depth span:nth-child(n+3){display:none}
-    .hero__title h1{font-size:clamp(31px,9.2vw,38px)}
+    .hero__title{padding:22px 20px 42px}
+    .hero__title h1{font-size:clamp(27px,8.6vw,36px);line-height:1.08;max-width:10ch}
     .buy{padding-top:18px}
     .qtyrow{grid-template-columns:1fr}
     .qty{justify-content:space-between}
@@ -864,6 +872,20 @@
     .parallax-scene{min-height:390px}
     .stick__price{display:none}
     .stick .atc{padding:12px 16px;min-width:118px}
+  }
+  @media(max-width:560px){
+    .gallery__main{
+      width:100vw;
+      height:80svh;
+      min-height:540px;
+      max-height:720px;
+      aspect-ratio:auto;
+      margin-left:calc(50% - 50vw);
+      margin-right:calc(50% - 50vw);
+    }
+    .gallery__main video{object-fit:contain}
+    .hero__title{padding:22px 20px 42px}
+    .hero__title h1{font-size:clamp(27px,8.4vw,36px);line-height:1.08;max-width:10ch}
   }
 </style>
 </head>
@@ -877,8 +899,8 @@
 <!-- Marquee value bar -->
 <div class="ticker">
   <div class="ticker__track">
-    <span>Free UK delivery on orders over £100</span><span>Solid mango wood · hand-finished</span><span>Minimal assembly required</span><span>Room of Choice delivery</span>
-    <span>Free UK delivery on orders over £100</span><span>Solid mango wood · hand-finished</span><span>Minimal assembly required</span><span>Room of Choice delivery</span>
+    <span>Free UK delivery on orders over £100</span><span>Solid mango wood, hand-finished</span><span>Minimal assembly required</span><span>Room of Choice delivery</span>
+    <span>Free UK delivery on orders over £100</span><span>Solid mango wood, hand-finished</span><span>Minimal assembly required</span><span>Room of Choice delivery</span>
   </div>
 </div>
 
@@ -934,7 +956,7 @@
     <!-- Buy box -->
     <div class="buy">
       <div class="rating reveal">
-        <span class="stars">★★★★★</span>
+        <span class="stars">5.0</span>
         <strong data-count="5" data-dec="1">5.0</strong>
         <span class="rating__note">Loved by early customers</span>
       </div>
@@ -1019,7 +1041,7 @@
   </div>
 </section>
 
-<!-- MATERIAL / CRAFT STORY  (P1 · P2 · P3) -->
+<!-- MATERIAL / CRAFT STORY -->
 <section class="sec sec--ink">
   <div class="wrap">
     <div class="lede reveal">
@@ -1176,7 +1198,7 @@
     <h2>Bring a little calm<br>to your bedside.</h2>
     <p>Solid mango wood, a warm walnut finish, two quiet drawers. A FABLEROOM original at £189, with free UK delivery.</p>
     <div class="closing__cta">
-      <a href="#" class="btn-ghost" id="ctaAdd">Add to bag &middot; £189</a>
+      <a href="#" class="btn-ghost" id="ctaAdd">Add to bag, £189</a>
       <a href="#" class="closing__link">Explore the collection</a>
     </div>
   </div>
@@ -1190,7 +1212,7 @@
     <p>Move across the piece to zoom into the walnut finish, the carved fronts and the brass-finish pulls.</p>
   </div>
   <div class="exp__stage reveal reveal-d1" id="expStage">
-    <span class="exp__hint">Hover &middot; tap &amp; hold to zoom</span>
+    <span class="exp__hint">Hover or tap and hold to zoom</span>
     <img id="expImg" src="https://fableroom.com/cdn/shop/files/FRST00017A_2.png?width=1600" alt="Explore the Monit Two Drawer Bedside Table in detail">
   </div>
 </section>
@@ -1199,21 +1221,21 @@
 <section class="revband" id="reviews" data-priority-block>
   <div class="revband__head reveal">
     <span class="eyebrow">Loved by early customers</span>
-    <div class="revband__score"><span class="stars">★★★★★</span> <b data-count="5" data-dec="1">5.0</b></div>
+    <div class="revband__score"><span class="stars">Rated</span> <b data-count="5" data-dec="1">5.0</b></div>
   </div>
   <div class="revmarquee">
     <div class="revtrack">
-      <article class="woodcard"><div class="stars">★★★★★</div><p>"Even richer in person than the photos. Easy to put together."</p><span class="who">Verified buyer</span></article>
-      <article class="woodcard"><div class="stars">★★★★★</div><p>"Feels like solid wood, not flat-pack. Lovely brass detail."</p><span class="who">Verified buyer</span></article>
-      <article class="woodcard"><div class="stars">★★★★★</div><p>"Fits perfectly beside the bed and the drawers run smoothly."</p><span class="who">Verified buyer</span></article>
-      <article class="woodcard"><div class="stars">★★★★★</div><p>"The walnut tone is gorgeous against my linen bedding."</p><span class="who">Verified buyer</span></article>
-      <article class="woodcard"><div class="stars">★★★★★</div><p>"Quietly elegant. Exactly the calm look I wanted."</p><span class="who">Verified buyer</span></article>
+      <article class="woodcard"><div class="stars">5.0 rating</div><p>"Even richer in person than the photos. Easy to put together."</p><span class="who">Verified buyer</span></article>
+      <article class="woodcard"><div class="stars">5.0 rating</div><p>"Feels like solid wood, not flat-pack. Lovely brass detail."</p><span class="who">Verified buyer</span></article>
+      <article class="woodcard"><div class="stars">5.0 rating</div><p>"Fits perfectly beside the bed and the drawers run smoothly."</p><span class="who">Verified buyer</span></article>
+      <article class="woodcard"><div class="stars">5.0 rating</div><p>"The walnut tone is gorgeous against my linen bedding."</p><span class="who">Verified buyer</span></article>
+      <article class="woodcard"><div class="stars">5.0 rating</div><p>"Quietly elegant. Exactly the calm look I wanted."</p><span class="who">Verified buyer</span></article>
       <!-- duplicate set for seamless loop -->
-      <article class="woodcard" aria-hidden="true"><div class="stars">★★★★★</div><p>"Even richer in person than the photos. Easy to put together."</p><span class="who">Verified buyer</span></article>
-      <article class="woodcard" aria-hidden="true"><div class="stars">★★★★★</div><p>"Feels like solid wood, not flat-pack. Lovely brass detail."</p><span class="who">Verified buyer</span></article>
-      <article class="woodcard" aria-hidden="true"><div class="stars">★★★★★</div><p>"Fits perfectly beside the bed and the drawers run smoothly."</p><span class="who">Verified buyer</span></article>
-      <article class="woodcard" aria-hidden="true"><div class="stars">★★★★★</div><p>"The walnut tone is gorgeous against my linen bedding."</p><span class="who">Verified buyer</span></article>
-      <article class="woodcard" aria-hidden="true"><div class="stars">★★★★★</div><p>"Quietly elegant. Exactly the calm look I wanted."</p><span class="who">Verified buyer</span></article>
+      <article class="woodcard" aria-hidden="true"><div class="stars">5.0 rating</div><p>"Even richer in person than the photos. Easy to put together."</p><span class="who">Verified buyer</span></article>
+      <article class="woodcard" aria-hidden="true"><div class="stars">5.0 rating</div><p>"Feels like solid wood, not flat-pack. Lovely brass detail."</p><span class="who">Verified buyer</span></article>
+      <article class="woodcard" aria-hidden="true"><div class="stars">5.0 rating</div><p>"Fits perfectly beside the bed and the drawers run smoothly."</p><span class="who">Verified buyer</span></article>
+      <article class="woodcard" aria-hidden="true"><div class="stars">5.0 rating</div><p>"The walnut tone is gorgeous against my linen bedding."</p><span class="who">Verified buyer</span></article>
+      <article class="woodcard" aria-hidden="true"><div class="stars">5.0 rating</div><p>"Quietly elegant. Exactly the calm look I wanted."</p><span class="who">Verified buyer</span></article>
     </div>
   </div>
 </section>
@@ -1242,7 +1264,7 @@
   <div class="wrap">
     <div class="stick__info">
       <img src="https://fableroom.com/cdn/shop/files/FRST00017A_1.png?width=200" alt="">
-      <div><b>Monit Two Drawer Bedside Table</b><small>Walnut · Solid mango wood</small></div>
+      <div><b>Monit Two Drawer Bedside Table</b><small>Walnut, solid mango wood</small></div>
     </div>
     <div class="stick__cta">
       <span class="stick__price">£189</span>
@@ -1295,10 +1317,12 @@ let zoomed=false; const ZOOM=2.4;
 let heroMode='video';
 let heroTimer=null;
 let hIdx=0;
+let heroVideoLoops=0;
+const HERO_VIDEO_PLAYS=2;
 const heroSrcs=[
-  'https://fableroom.com/cdn/shop/files/FRST00017A_1.png?width=1400',
   'https://fableroom.com/cdn/shop/files/FRST00017A_2.png?width=1400',
-  'https://fableroom.com/cdn/shop/files/FRST00017A_3.png?width=1400'
+  'https://fableroom.com/cdn/shop/files/FRST00017A_3.png?width=1400',
+  'https://fableroom.com/cdn/shop/files/FRST00017A_1.png?width=1400'
 ];
 function activeHeroMedia(){return heroMode==='video'&&heroVideo ? heroVideo : main}
 function panTo(e){
@@ -1341,6 +1365,7 @@ function fadeToVideo(){
   main.classList.add('hero-media--hidden');
   if(heroVideo){
     heroVideo.classList.remove('hero-media--hidden');
+    heroVideoLoops=0;
     heroVideo.currentTime=0;
     heroVideo.play().catch(()=>{heroTimer=setTimeout(()=>fadeToImage(heroSrcs[0],0),900);});
   }
@@ -1364,7 +1389,15 @@ document.getElementById('thumbs').addEventListener('click',e=>{
 
 /* ---- Hero media sequence: video, then images 1, 2, 3 ---- */
 if(heroVideo){
-  heroVideo.addEventListener('ended',()=>fadeToImage(heroSrcs[0],0));
+  heroVideo.addEventListener('ended',()=>{
+    heroVideoLoops+=1;
+    if(heroVideoLoops<HERO_VIDEO_PLAYS){
+      heroVideo.currentTime=0;
+      heroVideo.play().catch(()=>fadeToImage(heroSrcs[0],0));
+    }else{
+      fadeToImage(heroSrcs[0],0);
+    }
+  });
   heroVideo.addEventListener('error',()=>fadeToImage(heroSrcs[0],0));
 }
 setTimeout(()=>{if(heroMode==='video' && heroVideo && heroVideo.paused) fadeToImage(heroSrcs[0],0);},1800);
