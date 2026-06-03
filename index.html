@@ -1376,6 +1376,32 @@
     opacity:.9;
     text-shadow:0 2px 14px rgba(0,0,0,.44);
   }
+
+  /* ===== Pure wood CTAs and reliable sticky buy bar ===== */
+  .atc,.buynow,.btn-ghost,.stick .atc,.foot__news button{
+    background-image:url('https://fableroom.com/cdn/shop/files/FRST00017A_7.png?width=1200') !important;
+    background-size:cover !important;
+    background-position:center !important;
+    background-repeat:no-repeat !important;
+    background-color:#5f3a24 !important;
+    color:#fff !important;
+    border:0 !important;
+    box-shadow:none !important;
+    text-shadow:0 1px 8px rgba(0,0,0,.55);
+  }
+  .atc::before{
+    display:none !important;
+  }
+  .atc:hover,.buynow:hover,.btn-ghost:hover,.stick .atc:hover,.foot__news button:hover{
+    background-image:url('https://fableroom.com/cdn/shop/files/FRST00017A_7.png?width=1200') !important;
+    filter:saturate(1.08) contrast(1.04);
+  }
+  .stick{
+    z-index:200;
+  }
+  .stick.show{
+    transform:translateY(0);
+  }
 </style>
 </head>
 <body>
@@ -1780,16 +1806,17 @@ if(window.matchMedia && matchMedia('(prefers-reduced-motion:reduce)').matches){
 /* ---- Header shrink + sticky ATC ---- */
 const hdr=document.getElementById('hdr'), stick=document.getElementById('stick'), parallaxStory=document.getElementById('parallaxStory');
 const pdpEnd=document.querySelector('.pdp');
-window.addEventListener('scroll',()=>{
+function updateStickyBar(){
   const y=window.scrollY;
   hdr.classList.toggle('shrink',y>40);
   const r=pdpEnd.getBoundingClientRect();
-  const pr=parallaxStory ? parallaxStory.getBoundingClientRect() : null;
-  const past=r.bottom<120;
+  const past=y>520 || r.bottom<window.innerHeight;
   const nearFoot=(window.innerHeight+y)>(document.body.offsetHeight-260);
-  const inParallax=pr && pr.top<window.innerHeight && pr.bottom>0;
-  stick.classList.toggle('show',past&&!nearFoot&&!inParallax);
-},{passive:true});
+  stick.classList.toggle('show',past&&!nearFoot);
+}
+window.addEventListener('scroll',updateStickyBar,{passive:true});
+window.addEventListener('load',updateStickyBar);
+updateStickyBar();
 
 /* ---- Gallery thumbs + interactive pointer zoom ---- */
 const main=document.getElementById('mainImg');
