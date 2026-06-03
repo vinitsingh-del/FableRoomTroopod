@@ -82,6 +82,8 @@
   .pdp>*,.split>*,.dims>*{min-width:0}
   .gallery{position:sticky;top:96px}
   .gallery__main{border-radius:0;overflow:hidden;background:var(--bone-warm);aspect-ratio:3/4.08;position:relative;cursor:zoom-in}
+  .gallery__main.is-wide{aspect-ratio:16/9}
+  .gallery__main.is-video{cursor:default}
   .gallery__main.zoom{cursor:zoom-out;touch-action:none}
   .gallery__main::after{content:'';position:absolute;inset:0;background:var(--bone-warm);transform-origin:right;transition:transform 1.15s var(--ease);z-index:4}
   .gallery__main.in::after{transform:scaleX(0)}
@@ -97,6 +99,9 @@
     object-fit:contain;
     object-position:center center;
     transform:none;
+  }
+  .gallery__main.is-video .hero__scrim{
+    background:linear-gradient(to top,rgba(23,18,15,.58) 0%,rgba(23,18,15,.12) 38%,transparent 68%);
   }
   .hero-media--hidden{opacity:0;visibility:hidden;pointer-events:none}
   .gallery__main.zoom img,.gallery__main.zoom video{transition:transform .1s linear}
@@ -782,7 +787,54 @@
   @media(min-width:1180px){
     .pdp{gap:72px}
     .gallery__main{max-height:760px}
+    .gallery__main.is-video{max-height:none}
     .buy{max-width:520px;justify-self:end}
+  }
+  @media(min-width:981px){
+    .pdp:has(.gallery__main.is-wide){
+      grid-template-columns:minmax(0,1fr);
+      gap:0;
+      align-items:start;
+      min-height:auto;
+      padding-top:42px;
+    }
+    .pdp:has(.gallery__main.is-wide) .gallery{
+      position:relative;
+      top:auto;
+      width:100%;
+      max-width:1180px;
+      justify-self:center;
+    }
+    .pdp:has(.gallery__main.is-wide) .buy{
+      position:absolute;
+      right:44px;
+      top:50%;
+      transform:translateY(-50%);
+      width:min(380px,32%);
+      max-width:380px;
+      padding:24px;
+      border-color:rgba(255,255,255,.34);
+      background:rgba(255,255,255,.82);
+      box-shadow:0 30px 80px rgba(23,18,15,.2);
+      z-index:8;
+    }
+    .gallery__main.is-wide{
+      width:100%;
+      min-height:0;
+      border-radius:18px;
+      box-shadow:0 42px 100px rgba(23,18,15,.18),0 2px 0 rgba(255,255,255,.62) inset;
+    }
+    .gallery__main.is-wide .hero__title{padding:30px 34px 30px}
+    .gallery__main.is-wide .hero__title h1{font-size:clamp(32px,3.6vw,54px);line-height:1.04;max-width:11ch}
+    .gallery__main.is-video .gallery__hint{display:none}
+    .pdp:has(.gallery__main.is-wide) .buy .spec,
+    .pdp:has(.gallery__main.is-wide) .buy .exclusive,
+    .pdp:has(.gallery__main.is-wide) .buy .assure{
+      display:none;
+    }
+    .pdp:has(.gallery__main.is-wide) .buy .rating{margin-top:0}
+    .pdp:has(.gallery__main.is-wide) .buy .price b{font-size:38px}
+    .pdp:has(.gallery__main.is-wide) .buy .variant{margin-bottom:16px}
   }
   @media(max-width:980px){
     .ticker__track{animation-duration:42s}
@@ -883,6 +935,7 @@
       margin-left:calc(50% - 50vw);
       margin-right:calc(50% - 50vw);
     }
+    .gallery__main.is-wide,.gallery__main.is-video{aspect-ratio:auto}
     .gallery__main video{object-fit:contain}
     .hero__title{padding:22px 20px 42px}
     .hero__title h1{font-size:clamp(27px,8.4vw,36px);line-height:1.08;max-width:10ch}
@@ -924,7 +977,7 @@
   <div class="pdp">
     <!-- Gallery -->
     <div class="gallery">
-      <div class="gallery__main reveal">
+      <div class="gallery__main reveal is-wide is-video">
         <div class="hero__scrim"></div>
         <span class="gallery__hint">Tap &amp; hold to zoom</span>
         <div class="hero__depth" aria-hidden="true">
@@ -1348,6 +1401,7 @@ function setActiveThumb(selector){
 }
 function fadeToImage(src,index){
   heroMode='image';
+  stage.classList.remove('is-video');
   if(heroTimer) clearTimeout(heroTimer);
   zoomOut();
   main.src=src;
@@ -1360,6 +1414,7 @@ function fadeToImage(src,index){
 }
 function fadeToVideo(){
   heroMode='video';
+  stage.classList.add('is-video','is-wide');
   if(heroTimer) clearTimeout(heroTimer);
   zoomOut();
   main.classList.add('hero-media--hidden');
