@@ -1615,6 +1615,170 @@
       letter-spacing:.08em;
     }
   }
+
+  /* ===== Trust video, hero anchor and savings section ===== */
+  .hero__explore{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    margin-top:18px;
+    padding:10px 16px;
+    border:1px solid rgba(232,201,164,.58);
+    background:rgba(23,18,15,.34);
+    color:#FFF8EA;
+    font-size:10.5px;
+    font-weight:800;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    backdrop-filter:blur(8px);
+  }
+  .hero__explore:hover{
+    color:#FFF8EA;
+    background:rgba(23,18,15,.34);
+  }
+  .trustbar{
+    min-height:520px;
+    display:grid;
+    place-items:center;
+    overflow:hidden;
+    isolation:isolate;
+    background:var(--ink);
+  }
+  .trustbar::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    z-index:-1;
+    background:linear-gradient(180deg,rgba(23,18,15,.2),rgba(23,18,15,.44)),radial-gradient(70% 60% at 50% 42%,rgba(255,248,234,.12),rgba(23,18,15,.5));
+    pointer-events:none;
+  }
+  .trustbar__video{
+    position:absolute;
+    inset:0;
+    z-index:-2;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center;
+    filter:saturate(.96) contrast(1.02);
+  }
+  .trustbar__inner{
+    position:relative;
+    z-index:2;
+    width:min(980px,calc(100vw - 48px));
+    padding:56px 28px;
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:42px 74px;
+  }
+  .trust{
+    color:#fff;
+    padding:0;
+    min-height:74px;
+    justify-content:center;
+    text-shadow:0 2px 18px rgba(0,0,0,.55);
+  }
+  .trust+.trust::before{
+    display:none;
+  }
+  .trust__mark{
+    background:#E8C9A4;
+    height:2px;
+    width:48px;
+  }
+  .trust__t{
+    color:#fff;
+    font-size:13px;
+    letter-spacing:.2em;
+    text-shadow:0 2px 18px rgba(0,0,0,.58);
+  }
+  .trust:nth-child(5){
+    grid-column:1 / -1;
+    max-width:300px;
+    justify-self:center;
+  }
+  .savings{
+    background:linear-gradient(180deg,#F7F4EF,#ECE7DF);
+  }
+  .saving-grid{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:18px;
+    margin-top:38px;
+  }
+  .saving-card{
+    min-height:220px;
+    padding:28px;
+    background:#fff;
+    border:1px solid rgba(229,224,216,.95);
+    border-radius:8px;
+    box-shadow:0 18px 42px rgba(23,18,15,.06);
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+  }
+  .saving-card span{
+    color:var(--taupe);
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+  }
+  .saving-card b{
+    margin:28px 0 14px;
+    font-family:var(--serif);
+    font-size:clamp(34px,4vw,54px);
+    font-weight:500;
+    line-height:.95;
+    color:var(--ink);
+  }
+  .saving-card p{
+    color:var(--taupe);
+    font-size:14.5px;
+    line-height:1.55;
+  }
+  @media(min-width:981px){
+    .trustbar__inner{
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      max-width:980px;
+    }
+    .trustbar + .revband{
+      padding-top:58px;
+    }
+  }
+  @media(max-width:720px){
+    .hero__explore{
+      margin-top:14px;
+      padding:9px 13px;
+      font-size:9.5px;
+      letter-spacing:.12em;
+    }
+    .trustbar{
+      min-height:560px;
+    }
+    .trustbar__inner{
+      width:calc(100vw - 36px);
+      padding:42px 16px;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:32px 18px;
+    }
+    .trust{
+      min-height:82px;
+    }
+    .trust__t{
+      font-size:11px;
+      letter-spacing:.16em;
+      line-height:1.45;
+    }
+    .saving-grid{
+      grid-template-columns:1fr;
+      gap:14px;
+    }
+    .saving-card{
+      min-height:178px;
+      padding:24px 22px;
+    }
+  }
 </style>
 </head>
 <body>
@@ -1663,6 +1827,7 @@
         <div class="hero__title">
           <span class="eyebrow">Only at FABLEROOM</span>
           <h1>Monit Two Drawer<br>Bedside Table</h1>
+          <a class="hero__explore" href="#experience">Explore closely</a>
         </div>
         <video id="heroVideo" autoplay muted playsinline preload="auto" aria-label="Parallax hero video of the Monit bedside table">
           <source src="assets/hero-parallax.mp4" type="video/mp4">
@@ -1712,6 +1877,9 @@
 
 <!-- Trust strip -->
 <div class="trustbar">
+  <video class="trustbar__video" autoplay muted loop playsinline preload="metadata" aria-label="FABLEROOM trust badges video">
+    <source src="assets/trust-badges-video.mp4" type="video/mp4">
+  </video>
   <div class="trustbar__inner">
     <div class="trust reveal"><span class="trust__mark"></span><span class="trust__t">Solid mango wood</span></div>
     <div class="trust reveal reveal-d1"><span class="trust__mark"></span><span class="trust__t">Hand-finished grain</span></div>
@@ -1720,6 +1888,28 @@
     <div class="trust reveal reveal-d4"><span class="trust__mark"></span><span class="trust__t">UK-based support</span></div>
   </div>
 </div>
+
+<!-- REVIEWS -->
+<section class="revband" id="reviews">
+  <div class="revband__head reveal">
+    <span class="eyebrow">Loved by early customers</span>
+    <div class="revband__score"><span class="stars">Rated</span> <b data-count="5" data-dec="1">5.0</b></div>
+  </div>
+  <div class="revmarquee">
+    <div class="revtrack">
+      <article class="woodcard"><div class="stars">5.0 rating</div><p>"Even richer in person than the photos. Easy to put together."</p><span class="who">Verified buyer</span></article>
+      <article class="woodcard"><div class="stars">5.0 rating</div><p>"Feels like solid wood, not flat-pack. Lovely brass detail."</p><span class="who">Verified buyer</span></article>
+      <article class="woodcard"><div class="stars">5.0 rating</div><p>"Fits perfectly beside the bed and the drawers run smoothly."</p><span class="who">Verified buyer</span></article>
+      <article class="woodcard"><div class="stars">5.0 rating</div><p>"The walnut tone is gorgeous against my linen bedding."</p><span class="who">Verified buyer</span></article>
+      <article class="woodcard"><div class="stars">5.0 rating</div><p>"Quietly elegant. Exactly the calm look I wanted."</p><span class="who">Verified buyer</span></article>
+      <article class="woodcard" aria-hidden="true"><div class="stars">5.0 rating</div><p>"Even richer in person than the photos. Easy to put together."</p><span class="who">Verified buyer</span></article>
+      <article class="woodcard" aria-hidden="true"><div class="stars">5.0 rating</div><p>"Feels like solid wood, not flat-pack. Lovely brass detail."</p><span class="who">Verified buyer</span></article>
+      <article class="woodcard" aria-hidden="true"><div class="stars">5.0 rating</div><p>"Fits perfectly beside the bed and the drawers run smoothly."</p><span class="who">Verified buyer</span></article>
+      <article class="woodcard" aria-hidden="true"><div class="stars">5.0 rating</div><p>"The walnut tone is gorgeous against my linen bedding."</p><span class="who">Verified buyer</span></article>
+      <article class="woodcard" aria-hidden="true"><div class="stars">5.0 rating</div><p>"Quietly elegant. Exactly the calm look I wanted."</p><span class="who">Verified buyer</span></article>
+    </div>
+  </div>
+</section>
 
 <!-- ORIGINAL PRODUCT CATALOGUE -->
 <section class="catalogue-strip" id="catalogue">
@@ -1732,13 +1922,13 @@
       <p>Swipe through the original catalogue images with different product views and room backgrounds.</p>
     </div>
     <div class="catalogue-rail" aria-label="Original product catalogue images">
-      <figure class="catalogue-card"><img src="https://fableroom.com/cdn/shop/files/FRST00017A_1.png?width=900" alt="Monit bedside table front catalogue image"></figure>
-      <figure class="catalogue-card"><img src="https://fableroom.com/cdn/shop/files/FRST00017A_2.png?width=900" alt="Monit bedside table angled catalogue image"></figure>
       <figure class="catalogue-card"><img src="https://fableroom.com/cdn/shop/files/FRST00017A_3.png?width=900" alt="Monit bedside table drawer catalogue image"></figure>
       <figure class="catalogue-card"><img src="https://fableroom.com/cdn/shop/files/FRST00017A_4.png?width=900" alt="Monit bedside table brass handle catalogue image"></figure>
       <figure class="catalogue-card"><img src="https://fableroom.com/cdn/shop/files/FRST00017A_5.png?width=900" alt="Monit bedside table styled room catalogue image"></figure>
       <figure class="catalogue-card"><img src="https://fableroom.com/cdn/shop/files/FRST00017A_7.png?width=900" alt="Monit bedside table walnut top catalogue image"></figure>
       <figure class="catalogue-card"><img src="https://fableroom.com/cdn/shop/files/FRST00017A_8.png?width=900" alt="Monit bedside table wood detail catalogue image"></figure>
+      <figure class="catalogue-card"><img src="https://fableroom.com/cdn/shop/files/FRST00017A_1.png?width=900" alt="Monit bedside table front catalogue image"></figure>
+      <figure class="catalogue-card"><img src="https://fableroom.com/cdn/shop/files/FRST00017A_2.png?width=900" alt="Monit bedside table angled catalogue image"></figure>
     </div>
   </div>
 </section>
@@ -1815,41 +2005,18 @@
   </div>
 </section>
 
-<!-- IN-ROOM + DIMENSIONS  (P4 fit/scale) -->
-<section class="sec sec--bone">
+<!-- FABLEROOM VALUE -->
+<section class="sec sec--bone savings">
   <div class="wrap">
-    <div class="dims">
-      <div class="dims__fig mask reveal">
-        <img data-px="0.06" data-pxs="1.08" src="https://fableroom.com/cdn/shop/files/FRST00017A_5.png?width=1100" alt="Monit bedside table styled beside a bed">
-      </div>
-      <div class="reveal reveal-d1">
-        <span class="eyebrow">Proportion and Fit</span>
-        <h2 class="serif" style="font-size:clamp(28px,3vw,38px);font-weight:400;line-height:1.08;letter-spacing:-.01em;margin:14px 0 16px;">Made to sit calmly<br>beside the bed.</h2>
-        <p style="opacity:.82;margin-bottom:24px;font-size:15.5px;">Two quiet drawers, a balanced footprint, kept open and uncluttered.</p>
-        <table class="dimtable">
-          <tr><td>Material</td><td>Solid mango wood</td></tr>
-          <tr><td>Finish</td><td>Walnut</td></tr>
-          <tr><td>Handles</td><td>Brass-finish</td></tr>
-          <tr><td>Drawers</td><td>Two</td></tr>
-          <tr><td>Assembly</td><td>Minimal</td></tr>
-        </table>
-      </div>
+    <div class="lede reveal">
+      <span class="eyebrow">Why FABLEROOM saves</span>
+      <h2>More of your budget<br>goes into the piece.</h2>
+      <p>Buying direct keeps the path simple: considered design, solid materials, fair delivery and fewer layers between the workshop and your room.</p>
     </div>
-  </div>
-</section>
-
-<!-- FEATURE ROW -->
-<section class="sec">
-  <div class="wrap">
-    <div class="split reveal">
-      <div class="split__media mask"><img data-px="0.09" data-pxs="1.18" src="https://fableroom.com/cdn/shop/files/FRST00017A_3.png?width=1100" alt="Drawers open showing storage"></div>
-      <div class="split__text">
-        <span class="eyebrow">Everyday Storage</span>
-        <h3 style="margin-top:14px;">Two drawers that<br>keep the calm.</h3>
-        <p>Everything you reach for at night, tucked away. The surface stays clear, the room stays quiet.</p>
-        <div class="featline">Soft-running drawers with generous depth</div>
-        <div class="featline">A stable top for a lamp, glass and book</div>
-      </div>
+    <div class="saving-grid">
+      <article class="saving-card reveal"><span>Direct price</span><b>£189</b><p>No showroom markup added to the bedside table.</p></article>
+      <article class="saving-card reveal reveal-d1"><span>Free delivery</span><b>Over £100</b><p>This piece qualifies for free mainland UK delivery.</p></article>
+      <article class="saving-card reveal reveal-d2"><span>Built to last</span><b>Solid wood</b><p>Less replacement, more years of use from one purchase.</p></article>
     </div>
   </div>
 </section>
@@ -1957,29 +2124,6 @@
   <div class="exp__stage reveal reveal-d1" id="expStage">
     <span class="exp__hint">Hover or tap and hold to zoom</span>
     <img id="expImg" src="https://fableroom.com/cdn/shop/files/FRST00017A_2.png?width=1600" alt="Explore the Monit Two Drawer Bedside Table in detail">
-  </div>
-</section>
-
-<!-- REVIEWS (wooden marquee, below CTA) -->
-<section class="revband" id="reviews" data-priority-block>
-  <div class="revband__head reveal">
-    <span class="eyebrow">Loved by early customers</span>
-    <div class="revband__score"><span class="stars">Rated</span> <b data-count="5" data-dec="1">5.0</b></div>
-  </div>
-  <div class="revmarquee">
-    <div class="revtrack">
-      <article class="woodcard"><div class="stars">5.0 rating</div><p>"Even richer in person than the photos. Easy to put together."</p><span class="who">Verified buyer</span></article>
-      <article class="woodcard"><div class="stars">5.0 rating</div><p>"Feels like solid wood, not flat-pack. Lovely brass detail."</p><span class="who">Verified buyer</span></article>
-      <article class="woodcard"><div class="stars">5.0 rating</div><p>"Fits perfectly beside the bed and the drawers run smoothly."</p><span class="who">Verified buyer</span></article>
-      <article class="woodcard"><div class="stars">5.0 rating</div><p>"The walnut tone is gorgeous against my linen bedding."</p><span class="who">Verified buyer</span></article>
-      <article class="woodcard"><div class="stars">5.0 rating</div><p>"Quietly elegant. Exactly the calm look I wanted."</p><span class="who">Verified buyer</span></article>
-      <!-- duplicate set for seamless loop -->
-      <article class="woodcard" aria-hidden="true"><div class="stars">5.0 rating</div><p>"Even richer in person than the photos. Easy to put together."</p><span class="who">Verified buyer</span></article>
-      <article class="woodcard" aria-hidden="true"><div class="stars">5.0 rating</div><p>"Feels like solid wood, not flat-pack. Lovely brass detail."</p><span class="who">Verified buyer</span></article>
-      <article class="woodcard" aria-hidden="true"><div class="stars">5.0 rating</div><p>"Fits perfectly beside the bed and the drawers run smoothly."</p><span class="who">Verified buyer</span></article>
-      <article class="woodcard" aria-hidden="true"><div class="stars">5.0 rating</div><p>"The walnut tone is gorgeous against my linen bedding."</p><span class="who">Verified buyer</span></article>
-      <article class="woodcard" aria-hidden="true"><div class="stars">5.0 rating</div><p>"Quietly elegant. Exactly the calm look I wanted."</p><span class="who">Verified buyer</span></article>
-    </div>
   </div>
 </section>
 
