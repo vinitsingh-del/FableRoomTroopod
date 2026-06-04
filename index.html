@@ -1834,6 +1834,87 @@
       display:none;
     }
   }
+  /* ===== Original static hero image mode ===== */
+  .gallery__main.hero-original{
+    aspect-ratio:9/16;
+    cursor:zoom-in;
+    background:#ECEAE5;
+    border:0;
+    border-radius:0;
+    box-shadow:none;
+  }
+  .gallery__main.hero-original::before,
+  .gallery__main.hero-original::after,
+  .gallery__main.hero-original .gallery__hint{
+    display:none;
+  }
+  .gallery__main.hero-original img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center center;
+  }
+  .gallery__main.hero-original .hero__scrim{
+    display:block;
+    background:linear-gradient(to top,rgba(23,18,15,.38) 0%,rgba(23,18,15,.1) 36%,rgba(23,18,15,0) 66%);
+  }
+  .gallery__main.hero-original .hero__title{
+    display:block;
+    opacity:1;
+    transform:none;
+    padding:0 44px 52px;
+  }
+  .gallery__main.hero-original .hero__title .eyebrow{
+    color:#F2D4A7;
+    font-size:12px;
+    letter-spacing:.34em;
+    margin-bottom:18px;
+    font-weight:700;
+  }
+  .gallery__main.hero-original .hero__title h1{
+    font-size:clamp(58px,5.2vw,86px);
+    line-height:1.02;
+    font-weight:500;
+    max-width:8.8ch;
+    color:#fff;
+    text-shadow:0 14px 38px rgba(0,0,0,.24);
+  }
+  @media(min-width:981px){
+    .pdp:has(.gallery__main.hero-original){
+      grid-template-columns:minmax(460px,620px) minmax(520px,680px);
+      justify-content:center;
+      align-items:center;
+      gap:86px;
+      padding:34px 0 72px;
+    }
+    .gallery:has(.gallery__main.hero-original){
+      width:min(620px,42vw);
+      justify-self:end;
+      position:relative;
+      top:auto;
+    }
+    .gallery__main.hero-original{
+      max-height:calc(100svh - 70px);
+      min-height:680px;
+    }
+  }
+  @media(max-width:720px){
+    .gallery__main.hero-original{
+      width:100%;
+      aspect-ratio:9/16;
+      height:auto;
+      min-height:0;
+      max-height:none;
+      margin:0 auto;
+    }
+    .gallery__main.hero-original .hero__title{
+      padding:0 32px 42px;
+    }
+    .gallery__main.hero-original .hero__title h1{
+      font-size:clamp(44px,12vw,64px);
+      line-height:1.03;
+    }
+  }
   </style>
 </head>
 <body>
@@ -1871,21 +1952,14 @@
   <div class="pdp">
     <!-- Gallery -->
     <div class="gallery">
-      <div class="gallery__main reveal is-video">
+      <div class="gallery__main reveal hero-original">
         <div class="hero__scrim"></div>
         <span class="gallery__hint">Tap and hold to zoom</span>
-        <div class="hero__depth" aria-hidden="true">
-          <span>Only at FABLEROOM</span>
-          <span>Solid mango wood</span>
-          <span>Walnut finish</span>
-        </div>
         <div class="hero__title">
           <span class="eyebrow">Only at FABLEROOM</span>
           <h1>Monit Two Drawer<br>Bedside Table</h1>
         </div>
-        <video id="heroVideo" autoplay muted playsinline preload="auto" aria-label="Parallax hero video of the Monit bedside table">
-          <source src="assets/hero-parallax.mp4?v=original-hero" type="video/mp4">
-        </video>
+        <img id="mainImg" src="https://fableroom.com/cdn/shop/files/FRST00017A_1.png?width=1600" alt="Monit Two Drawer Bedside Table styled with lamp and vase">
       </div>
     </div>
 
@@ -2256,7 +2330,7 @@ const main=document.getElementById('mainImg');
 const heroVideo=document.getElementById('heroVideo');
 const stage=document.querySelector('.gallery__main');
 let zoomed=false; const ZOOM=2.4;
-let heroMode='video';
+let heroMode='image';
 let heroTimer=null;
 let hIdx=0;
 let heroVideoLoops=0;
@@ -2304,6 +2378,7 @@ function fadeToImage(src,index){
   scheduleNextImage();
 }
 function fadeToVideo(){
+  if(!heroVideo) return;
   heroMode='video';
   stage.classList.add('is-video');
   if(heroTimer) clearTimeout(heroTimer);
