@@ -29,6 +29,7 @@
     --ease:cubic-bezier(.22,1,.36,1);
     --ease-soft:cubic-bezier(.16,1,.3,1);
     --maxw:1280px;
+    --cta-wood:url('assets/cta-wood.png?v=plain-wood');
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth;overflow-x:clip}
@@ -1345,21 +1346,25 @@
   .parallax-story :where(h2,p,.eyebrow){
     text-shadow:0 0 22px rgba(232,201,164,.28),0 12px 38px rgba(0,0,0,.28);
   }
-  .atc,.buynow,.btn-ghost,.stick .atc,.foot__news button{
-    background:
-      linear-gradient(90deg,rgba(24,14,8,.62),rgba(101,58,31,.34) 42%,rgba(33,18,10,.68)),
-      linear-gradient(180deg,rgba(255,255,255,.12),rgba(0,0,0,.16)),
-      url('https://fableroom.com/cdn/shop/files/FRST00017A_8.png?width=1200') center/cover !important;
-    color:#fff;
-    border:1px solid rgba(232,201,164,.42);
-    box-shadow:0 18px 42px rgba(74,42,23,.32),inset 0 1px 0 rgba(255,255,255,.18),inset 0 -18px 28px rgba(23,12,7,.24);
-    text-shadow:0 1px 12px rgba(0,0,0,.44);
+  .atc,.buynow,.btn-ghost,.closing__link,.stick .atc,.foot__news button{
+    background-image:var(--cta-wood) !important;
+    background-size:cover !important;
+    background-position:center !important;
+    background-repeat:no-repeat !important;
+    background-color:#74441f !important;
+    color:#FFF8EA !important;
+    border:0 !important;
+    box-shadow:none !important;
+    text-shadow:0 1px 4px rgba(49,25,12,.82);
   }
-  .atc:hover,.buynow:hover,.btn-ghost:hover,.stick .atc:hover,.foot__news button:hover{
-    background:
-      linear-gradient(90deg,rgba(18,10,6,.7),rgba(117,67,36,.42) 45%,rgba(24,14,8,.76)),
-      linear-gradient(180deg,rgba(255,255,255,.16),rgba(0,0,0,.18)),
-      url('https://fableroom.com/cdn/shop/files/FRST00017A_7.png?width=1200') center/cover !important;
+  .atc:hover,.buynow:hover,.btn-ghost:hover,.closing__link:hover,.stick .atc:hover,.foot__news button:hover{
+    background-image:var(--cta-wood) !important;
+    background-size:cover !important;
+    background-position:center !important;
+    background-repeat:no-repeat !important;
+    background-color:#74441f !important;
+    color:#FFF8EA !important;
+    filter:none !important;
   }
   .woodcard{
     padding:24px 22px 22px;
@@ -1385,27 +1390,27 @@
   }
 
   /* ===== Pure wood CTAs and reliable sticky buy bar ===== */
-  .atc,.buynow,.btn-ghost,.stick .atc,.foot__news button{
-    background-image:url('https://fableroom.com/cdn/shop/files/FRST00017A_8.png?width=1200') !important;
-    background-size:260% !important;
-    background-position:center 58% !important;
+  .atc,.buynow,.btn-ghost,.closing__link,.stick .atc,.foot__news button{
+    background-image:var(--cta-wood) !important;
+    background-size:cover !important;
+    background-position:center !important;
     background-repeat:no-repeat !important;
-    background-color:#5f3a24 !important;
-    color:#fff !important;
+    background-color:#74441f !important;
+    color:#FFF8EA !important;
     border:0 !important;
     box-shadow:none !important;
-    text-shadow:0 1px 8px rgba(0,0,0,.55);
+    text-shadow:0 1px 4px rgba(49,25,12,.82);
     transition:transform .25s var(--ease),opacity .25s ease !important;
   }
   .atc::before{
     display:none !important;
   }
-  .atc:hover,.buynow:hover,.btn-ghost:hover,.stick .atc:hover,.foot__news button:hover{
-    background-image:url('https://fableroom.com/cdn/shop/files/FRST00017A_8.png?width=1200') !important;
-    background-size:260% !important;
-    background-position:center 58% !important;
+  .atc:hover,.buynow:hover,.btn-ghost:hover,.closing__link:hover,.stick .atc:hover,.foot__news button:hover{
+    background-image:var(--cta-wood) !important;
+    background-size:cover !important;
+    background-position:center !important;
     background-repeat:no-repeat !important;
-    background-color:#5f3a24 !important;
+    background-color:#74441f !important;
     color:#FFF8EA !important;
     filter:none !important;
   }
@@ -1425,10 +1430,19 @@
     color:var(--taupe);
     text-shadow:none;
   }
-  .atc span,.stick .atc span,.buynow,.btn-ghost,.foot__news button{
+  .atc span,.stick .atc span,.buynow,.btn-ghost,.closing__link,.foot__news button{
     color:#FFF8EA !important;
     font-weight:800;
-    text-shadow:0 2px 8px rgba(0,0,0,.72);
+    text-shadow:0 1px 4px rgba(49,25,12,.82);
+  }
+  .closing__link{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-height:54px;
+    padding:16px 34px;
+    border-bottom:0 !important;
+    border-radius:6px;
   }
   .atc,.stick .atc{
     letter-spacing:.14em;
@@ -1676,12 +1690,85 @@
     letter-spacing:.2em;
     text-shadow:0 2px 18px rgba(0,0,0,.58);
   }
+  .trust:nth-child(1){--trust:0}
+  .trust:nth-child(2){--trust:1}
+  .trust:nth-child(3){--trust:2}
+  .trust:nth-child(4){--trust:3}
+  .trust:nth-child(5){--trust:4}
+  .trust__mark{
+    opacity:0;
+    transform:scaleX(0);
+    transform-origin:center;
+    transition:opacity .55s ease,transform .7s var(--ease);
+    transition-delay:calc(var(--trust,0) * .14s);
+  }
+  .trust.in .trust__mark{
+    opacity:1;
+    transform:scaleX(1);
+  }
+  .trust__word{
+    display:inline-block;
+    opacity:0;
+    transform:translateY(12px);
+    filter:blur(5px);
+    transition:opacity .55s ease,transform .72s var(--ease-soft),filter .72s ease;
+    transition-delay:calc((var(--trust,0) * .14s) + (var(--word,0) * .085s) + .08s);
+  }
+  .trust.in .trust__word{
+    opacity:1;
+    transform:none;
+    filter:blur(0);
+  }
+  .trust__word:nth-child(1){--word:0}
+  .trust__word:nth-child(2){--word:1}
+  .trust__word:nth-child(3){--word:2}
+  .trust__word:nth-child(4){--word:3}
+  .trust__word:nth-child(5){--word:4}
   .trust:nth-child(5){
     grid-column:1 / -1;
     max-width:300px;
     justify-self:center;
   }
+  .trustbar__save{
+    position:relative;
+    z-index:3;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    min-height:52px;
+    margin:-18px auto 46px;
+    padding:6px 18px 6px 7px;
+    border-radius:999px;
+    color:#FFF8EA;
+    border:1px solid rgba(232,201,164,.38);
+    background:rgba(23,18,15,.34);
+    box-shadow:0 18px 44px rgba(0,0,0,.22);
+    backdrop-filter:blur(14px);
+    text-transform:uppercase;
+    letter-spacing:.16em;
+    font-size:11px;
+    font-weight:800;
+    text-shadow:0 2px 16px rgba(0,0,0,.42);
+  }
+  .trustbar__save .save-toggle__knob{
+    min-width:74px;
+    min-height:40px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:999px;
+    background-image:var(--cta-wood);
+    background-size:cover;
+    background-position:center;
+    color:#FFF8EA;
+    text-shadow:0 1px 4px rgba(49,25,12,.82);
+  }
+  .trustbar__save .save-toggle__text{
+    white-space:nowrap;
+  }
   .savings{
+    scroll-margin-top:112px;
     background:linear-gradient(180deg,#F7F4EF,#ECE7DF);
   }
   .saving-grid{
@@ -1747,6 +1834,24 @@
       font-size:11px;
       letter-spacing:.16em;
       line-height:1.45;
+    }
+    .trustbar__save{
+      width:calc(100vw - 52px);
+      max-width:340px;
+      min-height:50px;
+      margin:-14px auto 38px;
+      padding:6px 14px 6px 6px;
+      gap:10px;
+      font-size:10px;
+      letter-spacing:.12em;
+    }
+    .trustbar__save .save-toggle__knob{
+      min-width:68px;
+      min-height:38px;
+    }
+    .trustbar__save .save-toggle__text{
+      overflow:hidden;
+      text-overflow:ellipsis;
     }
     .saving-grid{
       grid-template-columns:1fr;
@@ -2056,12 +2161,13 @@
     <source src="assets/trust-badges-video.mp4?v=trust-badges" type="video/mp4">
   </video>
   <div class="trustbar__inner">
-    <div class="trust reveal"><span class="trust__mark"></span><span class="trust__t">Solid mango wood</span></div>
-    <div class="trust reveal reveal-d1"><span class="trust__mark"></span><span class="trust__t">Hand-finished grain</span></div>
-    <div class="trust reveal reveal-d2"><span class="trust__mark"></span><span class="trust__t">Free UK delivery over £100</span></div>
-    <div class="trust reveal reveal-d3"><span class="trust__mark"></span><span class="trust__t">Minimal assembly</span></div>
-    <div class="trust reveal reveal-d4"><span class="trust__mark"></span><span class="trust__t">UK-based support</span></div>
+    <div class="trust reveal"><span class="trust__mark"></span><span class="trust__t"><span class="trust__word">Solid</span> <span class="trust__word">mango</span> <span class="trust__word">wood</span></span></div>
+    <div class="trust reveal reveal-d1"><span class="trust__mark"></span><span class="trust__t"><span class="trust__word">Hand-finished</span> <span class="trust__word">grain</span></span></div>
+    <div class="trust reveal reveal-d2"><span class="trust__mark"></span><span class="trust__t"><span class="trust__word">Free</span> <span class="trust__word">UK</span> <span class="trust__word">delivery</span> <span class="trust__word">over</span> <span class="trust__word">£100</span></span></div>
+    <div class="trust reveal reveal-d3"><span class="trust__mark"></span><span class="trust__t"><span class="trust__word">Minimal</span> <span class="trust__word">assembly</span></span></div>
+    <div class="trust reveal reveal-d4"><span class="trust__mark"></span><span class="trust__t"><span class="trust__word">UK-based</span> <span class="trust__word">support</span></span></div>
   </div>
+  <a class="trustbar__save reveal reveal-d5" href="#savings" aria-label="Jump to Why FABLEROOM saves section"><span class="save-toggle__knob">Save</span><span class="save-toggle__text">Why FABLEROOM saves</span></a>
 </div>
 
 <!-- REVIEWS -->
@@ -2181,7 +2287,7 @@
 </section>
 
 <!-- FABLEROOM VALUE -->
-<section class="sec sec--bone savings">
+<section class="sec sec--bone savings" id="savings">
   <div class="wrap">
     <div class="lede reveal">
       <span class="eyebrow">Why FABLEROOM saves</span>
