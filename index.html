@@ -1840,20 +1840,31 @@
     cursor:default;
     background:#ECEAE5;
     border:0;
-    border-radius:0;
-    box-shadow:none;
+    border-radius:18px;
+    box-shadow:0 24px 70px rgba(23,18,15,.12);
+    overflow:hidden;
   }
   .gallery__main.hero-original::before,
   .gallery__main.hero-original::after,
   .gallery__main.hero-original .gallery__hint{
     display:none;
   }
-  .gallery__main.hero-original img{
+  .gallery__main.hero-original img,
+  .gallery__main.hero-original video{
     width:100%;
     height:100%;
     object-fit:cover;
     object-position:center center;
     transform:none !important;
+  }
+  .gallery__main.hero-original video{
+    position:relative;
+    inset:auto;
+    left:auto;
+    z-index:1;
+    display:block;
+    max-width:100%;
+    background:#ECEAE5;
   }
   .gallery__main.hero-original.zoom img{
     transform:none !important;
@@ -1867,6 +1878,7 @@
     opacity:1;
     transform:none;
     padding:0 44px 52px;
+    z-index:4;
   }
   .gallery__main.hero-original .hero__title .eyebrow{
     color:#F2D4A7;
@@ -1881,7 +1893,7 @@
     font-weight:500;
     max-width:8.8ch;
     color:#fff;
-    text-shadow:0 14px 38px rgba(0,0,0,.24);
+    text-shadow:0 0 22px rgba(255,248,234,.34),0 14px 42px rgba(0,0,0,.36);
   }
   @media(min-width:981px){
     .pdp:has(.gallery__main.hero-original){
@@ -1910,6 +1922,7 @@
       min-height:0;
       max-height:none;
       margin:0 auto;
+      border-radius:14px;
     }
     .gallery__main.hero-original .hero__title{
       padding:0 32px 42px;
@@ -1963,7 +1976,9 @@
           <span class="eyebrow">Only at FABLEROOM</span>
           <h1>Monit Two Drawer<br>Bedside Table</h1>
         </div>
-        <img id="mainImg" src="https://fableroom.com/cdn/shop/files/FRST00017A_1.png?width=1600&hero=original" alt="Monit Two Drawer Bedside Table styled with lamp and vase" loading="eager" decoding="async">
+        <video id="heroAttachedVideo" autoplay muted loop playsinline preload="auto" aria-label="Monit Two Drawer Bedside Table hero video">
+          <source src="assets/hero-attached-original.mp4?v=attached-hero" type="video/mp4">
+        </video>
       </div>
     </div>
 
@@ -2329,13 +2344,14 @@ window.addEventListener('scroll',updateStickyBar,{passive:true});
 window.addEventListener('load',updateStickyBar);
 updateStickyBar();
 
-/* ---- Original hero image is locked to the full product scene ---- */
-const main=document.getElementById('mainImg');
+/* ---- Attached hero video is locked to the hero frame ---- */
+const heroAttachedVideo=document.getElementById('heroAttachedVideo');
 const stage=document.querySelector('.gallery__main');
-if(stage && main){
+if(stage && heroAttachedVideo){
   stage.classList.remove('zoom','is-video');
-  main.style.transform='';
-  main.style.transformOrigin='center';
+  heroAttachedVideo.style.transform='';
+  heroAttachedVideo.style.transformOrigin='center';
+  heroAttachedVideo.play().catch(()=>{});
 }
 
 /* ---- Qty ---- */
