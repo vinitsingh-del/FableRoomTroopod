@@ -1837,7 +1837,7 @@
   /* ===== Original static hero image mode ===== */
   .gallery__main.hero-original{
     aspect-ratio:9/16;
-    cursor:zoom-in;
+    cursor:default;
     background:#ECEAE5;
     border:0;
     border-radius:0;
@@ -1853,6 +1853,10 @@
     height:100%;
     object-fit:cover;
     object-position:center center;
+    transform:none !important;
+  }
+  .gallery__main.hero-original.zoom img{
+    transform:none !important;
   }
   .gallery__main.hero-original .hero__scrim{
     display:block;
@@ -1959,7 +1963,7 @@
           <span class="eyebrow">Only at FABLEROOM</span>
           <h1>Monit Two Drawer<br>Bedside Table</h1>
         </div>
-        <img id="mainImg" src="https://fableroom.com/cdn/shop/files/FRST00017A_1.png?width=1600" alt="Monit Two Drawer Bedside Table styled with lamp and vase">
+        <img id="mainImg" src="https://fableroom.com/cdn/shop/files/FRST00017A_1.png?width=1600&hero=original" alt="Monit Two Drawer Bedside Table styled with lamp and vase" loading="eager" decoding="async">
       </div>
     </div>
 
@@ -2325,28 +2329,13 @@ window.addEventListener('scroll',updateStickyBar,{passive:true});
 window.addEventListener('load',updateStickyBar);
 updateStickyBar();
 
-/* ---- Original hero image pointer zoom ---- */
+/* ---- Original hero image is locked to the full product scene ---- */
 const main=document.getElementById('mainImg');
 const stage=document.querySelector('.gallery__main');
-let zoomed=false; const ZOOM=2.4;
-function activeHeroMedia(){return main}
-function panTo(e){
-  const r=stage.getBoundingClientRect();
-  const x=Math.max(0,Math.min(100,((e.clientX-r.left)/r.width)*100));
-  const y=Math.max(0,Math.min(100,((e.clientY-r.top)/r.height)*100));
-  const active=activeHeroMedia();
-  if(active) active.style.transformOrigin=x+'% '+y+'%';
-}
-function zoomIn(e){if(!main)return;zoomed=true;stage.classList.add('zoom');panTo(e);main.style.transform='scale('+ZOOM+')';}
-function zoomOut(){
-  zoomed=false;stage.classList.remove('zoom');
-  if(main){main.style.transform='';main.style.transformOrigin='center';}
-}
 if(stage && main){
-  stage.addEventListener('pointermove',e=>{if(zoomed){if(e.cancelable)e.preventDefault();panTo(e);}});
-  stage.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse')zoomIn(e);});
-  stage.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse')zoomOut();});
-  stage.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse'){zoomed?zoomOut():zoomIn(e);}});
+  stage.classList.remove('zoom','is-video');
+  main.style.transform='';
+  main.style.transformOrigin='center';
 }
 
 /* ---- Qty ---- */
