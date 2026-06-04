@@ -2325,22 +2325,11 @@ window.addEventListener('scroll',updateStickyBar,{passive:true});
 window.addEventListener('load',updateStickyBar);
 updateStickyBar();
 
-/* ---- Gallery thumbs + interactive pointer zoom ---- */
+/* ---- Original hero image pointer zoom ---- */
 const main=document.getElementById('mainImg');
-const heroVideo=document.getElementById('heroVideo');
 const stage=document.querySelector('.gallery__main');
 let zoomed=false; const ZOOM=2.4;
-let heroMode='image';
-let heroTimer=null;
-let hIdx=0;
-let heroVideoLoops=0;
-const HERO_VIDEO_PLAYS=2;
-const heroSrcs=[
-  'https://fableroom.com/cdn/shop/files/FRST00017A_2.png?width=1400',
-  'https://fableroom.com/cdn/shop/files/FRST00017A_3.png?width=1400',
-  'https://fableroom.com/cdn/shop/files/FRST00017A_1.png?width=1400'
-];
-function activeHeroMedia(){return heroMode==='video'&&heroVideo ? heroVideo : main}
+function activeHeroMedia(){return main}
 function panTo(e){
   const r=stage.getBoundingClientRect();
   const x=Math.max(0,Math.min(100,((e.clientX-r.left)/r.width)*100));
@@ -2348,76 +2337,17 @@ function panTo(e){
   const active=activeHeroMedia();
   if(active) active.style.transformOrigin=x+'% '+y+'%';
 }
-function zoomIn(e){if(heroMode==='video')return;zoomed=true;stage.classList.add('zoom');panTo(e);activeHeroMedia().style.transform='scale('+ZOOM+')';}
+function zoomIn(e){if(!main)return;zoomed=true;stage.classList.add('zoom');panTo(e);main.style.transform='scale('+ZOOM+')';}
 function zoomOut(){
   zoomed=false;stage.classList.remove('zoom');
-  [main,heroVideo].filter(Boolean).forEach(el=>{el.style.transform='';el.style.transformOrigin='center';});
+  if(main){main.style.transform='';main.style.transformOrigin='center';}
 }
-stage.addEventListener('pointermove',e=>{if(zoomed){if(e.cancelable)e.preventDefault();panTo(e);}});
-stage.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse')zoomIn(e);});
-stage.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse')zoomOut();});
-stage.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse'){zoomed?zoomOut():zoomIn(e);}});
-
-function setActiveThumb(selector){
-  document.querySelectorAll('.thumbs button').forEach(x=>x.classList.remove('active'));
-  const btn=document.querySelector(selector);
-  if(btn) btn.classList.add('active');
+if(stage && main){
+  stage.addEventListener('pointermove',e=>{if(zoomed){if(e.cancelable)e.preventDefault();panTo(e);}});
+  stage.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse')zoomIn(e);});
+  stage.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse')zoomOut();});
+  stage.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse'){zoomed?zoomOut():zoomIn(e);}});
 }
-function fadeToImage(src,index){
-  heroMode='image';
-  stage.classList.remove('is-video');
-  if(heroTimer) clearTimeout(heroTimer);
-  zoomOut();
-  if(!main){fadeToVideo();return;}
-  main.src=src;
-  if(heroVideo) heroVideo.classList.add('hero-media--hidden');
-  main.classList.remove('hero-media--hidden');
-  requestAnimationFrame(()=>{main.style.opacity=1;});
-  setActiveThumb(`.thumbs button[data-src="${src}"]`);
-  hIdx=index;
-  scheduleNextImage();
-}
-function fadeToVideo(){
-  if(!heroVideo) return;
-  heroMode='video';
-  stage.classList.add('is-video');
-  if(heroTimer) clearTimeout(heroTimer);
-  zoomOut();
-  if(main) main.classList.add('hero-media--hidden');
-  if(heroVideo){
-    heroVideo.classList.remove('hero-media--hidden');
-    heroVideoLoops=0;
-    heroVideo.currentTime=0;
-    heroVideo.play().catch(()=>{heroTimer=setTimeout(()=>fadeToImage(heroSrcs[0],0),900);});
-  }
-  setActiveThumb('.thumbs button[data-video]');
-}
-function scheduleNextImage(){
-  if(heroMode!=='image' || zoomed) return;
-  if(heroTimer) clearTimeout(heroTimer);
-  heroTimer=setTimeout(()=>{
-    const next=hIdx+1;
-    if(next<heroSrcs.length) fadeToImage(heroSrcs[next],next);
-    else fadeToVideo();
-  },2600);
-}
-const thumbsEl=document.getElementById('thumbs');
-if(thumbsEl){
-  thumbsEl.addEventListener('click',e=>{
-    const b=e.target.closest('button'); if(!b)return;
-    fadeToVideo();
-  });
-}
-
-/* ---- Hero media: video only ---- */
-if(heroVideo){
-  heroVideo.addEventListener('ended',()=>{
-    heroVideo.currentTime=0;
-    heroVideo.play().catch(()=>{});
-  });
-  heroVideo.addEventListener('error',()=>{});
-}
-setTimeout(()=>{if(heroMode==='video' && heroVideo && heroVideo.paused) heroVideo.play().catch(()=>{});},1800);
 
 /* ---- Qty ---- */
 const q=document.getElementById('qty');
