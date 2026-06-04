@@ -787,6 +787,7 @@
     animation:grain 1.2s steps(4) infinite}
   @keyframes grain{0%{transform:translate(0,0)}25%{transform:translate(-3%,2%)}50%{transform:translate(2%,-3%)}75%{transform:translate(-2%,-2%)}100%{transform:translate(2%,3%)}}
   .progress{position:fixed;top:0;left:0;height:2px;width:100%;background:var(--brass);z-index:9500;transform:scaleX(0);transform-origin:left;will-change:transform}
+  .grain{animation:none!important;opacity:.026}
   @media(prefers-reduced-motion:reduce){.grain{animation:none}.loader__bar i{animation:none;transform:scaleX(1)}}
   /* ===== Experience the product (zoom) ===== */
   .exp{padding:100px 0 110px;background:var(--ink);color:#EDE6DC;overflow:hidden}
@@ -2410,7 +2411,7 @@
         <p>Solid mango wood, a warm walnut finish, two quiet drawers. A FABLEROOM original at £189, with free UK delivery.</p>
         <div class="closing__cta">
           <a href="#" class="btn-ghost" id="ctaAdd">Add to your home, £189</a>
-          <a href="#" class="closing__link">Explore the collection</a>
+          <a href="#catalogue" class="closing__link">Explore the collection</a>
         </div>
       </div>
     </div>
@@ -2481,8 +2482,11 @@ const startReveals=()=>_revEls.forEach(el=>io.observe(el));
 if(window.matchMedia && matchMedia('(prefers-reduced-motion:reduce)').matches){
   _revEls.forEach(el=>el.classList.add('in'));
 }else{
-  window.addEventListener('load',()=>setTimeout(startReveals,1300));
-  setTimeout(startReveals,3000); /* fallback if load is slow */
+  const scheduleReveals=()=>requestAnimationFrame(startReveals);
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',scheduleReveals,{once:true});
+  else scheduleReveals();
+  window.addEventListener('load',()=>setTimeout(startReveals,180),{once:true});
+  setTimeout(startReveals,900);
 }
 
 /* ---- Header shrink + sticky ATC ---- */
@@ -2513,6 +2517,8 @@ if(stage && heroAttachedVideo){
 if(heroAttachedVideo && heroCanvas){
   const ctx=heroCanvas.getContext('2d');
   let heroCanvasRunning=false;
+  let heroCanvasVisible=true;
+  let heroFrameId=0;
   function sizeHeroCanvas(){
     const r=heroCanvas.getBoundingClientRect();
     const dpr=Math.min(2,window.devicePixelRatio||1);
@@ -2525,7 +2531,10 @@ if(heroAttachedVideo && heroCanvas){
     return {cssW:r.width,cssH:r.height,dpr};
   }
   function drawHeroFrame(){
-    if(!ctx) return;
+    if(!ctx || !heroCanvasVisible || document.hidden){
+      heroCanvasRunning=false;
+      return;
+    }
     const {cssW,cssH,dpr}=sizeHeroCanvas();
     ctx.setTransform(dpr,0,0,dpr,0,0);
     ctx.clearRect(0,0,cssW,cssH);
@@ -2539,16 +2548,30 @@ if(heroAttachedVideo && heroCanvas){
       const sy=(vh-sh)/2;
       ctx.drawImage(heroAttachedVideo,sx,sy,sw,sh,0,0,cssW,cssH);
     }
-    requestAnimationFrame(drawHeroFrame);
+    heroFrameId=requestAnimationFrame(drawHeroFrame);
   }
   function startHeroCanvas(){
-    if(heroCanvasRunning) return;
+    if(heroCanvasRunning || !heroCanvasVisible || document.hidden) return;
     heroCanvasRunning=true;
     drawHeroFrame();
+  }
+  function stopHeroCanvas(){
+    heroCanvasRunning=false;
+    if(heroFrameId) cancelAnimationFrame(heroFrameId);
+    heroFrameId=0;
   }
   heroAttachedVideo.addEventListener('loadedmetadata',startHeroCanvas,{once:true});
   heroAttachedVideo.addEventListener('play',startHeroCanvas);
   window.addEventListener('resize',sizeHeroCanvas,{passive:true});
+  if('IntersectionObserver' in window){
+    const heroIo=new IntersectionObserver(es=>{
+      heroCanvasVisible=es[0].isIntersecting;
+      if(heroCanvasVisible) startHeroCanvas();
+      else stopHeroCanvas();
+    },{rootMargin:'180px 0px'});
+    heroIo.observe(heroCanvas.closest('.gallery__main')||heroCanvas);
+  }
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)stopHeroCanvas();else startHeroCanvas();});
   if(heroAttachedVideo.readyState>=1) startHeroCanvas();
 }
 
@@ -2561,11 +2584,51 @@ q.oninput=()=>q.value=q.value.replace(/[^0-9]/g,'');
 
 /* ---- Add to your home ---- */
 let count=0; const cc=document.getElementById('cartCount'), toast=document.getElementById('toast');
-function addBag(){
+let toastTimer;
+function showToast(message){
+  clearTimeout(toastTimer);
+  toast.textContent=message;
+  toast.classList.add('show');
+  toastTimer=setTimeout(()=>toast.classList.remove('show'),2200);
+}
+function addBag(e){
+  if(e) e.preventDefault();
   count+=clamp(+q.value); cc.textContent=count;
-  toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'),2200);
+  showToast('Added to your home');
 }
 ['atc','buynow','stickAtc','ctaAdd'].forEach(id=>{const el=document.getElementById(id);if(el)el.addEventListener('click',addBag)});
+const exploreCollection=document.querySelector('.closing__link');
+function smoothAnchorTo(target){
+  const top=target.getBoundingClientRect().top+window.scrollY-96;
+  window.scrollTo({top:Math.max(0,top),behavior:'smooth'});
+  if(target.id) history.replaceState(null,'','#'+target.id);
+}
+if(exploreCollection){
+  exploreCollection.addEventListener('click',e=>{
+    const target=document.getElementById('catalogue');
+    if(!target) return;
+    e.preventDefault();
+    smoothAnchorTo(target);
+  });
+}
+const saveJump=document.querySelector('.trustbar__save');
+if(saveJump){
+  saveJump.addEventListener('click',e=>{
+    const target=document.getElementById('savings');
+    if(!target) return;
+    e.preventDefault();
+    smoothAnchorTo(target);
+  });
+}
+const newsInput=document.querySelector('.foot__news input');
+const newsButton=document.querySelector('.foot__news button');
+if(newsInput&&newsButton){
+  newsButton.addEventListener('click',e=>{
+    e.preventDefault();
+    if(!newsInput.value.trim()){newsInput.focus();return;}
+    showToast('Subscribed');
+  });
+}
 
 /* ---- Accordions ---- */
 document.querySelectorAll('.acc').forEach(acc=>{
@@ -2603,12 +2666,14 @@ document.querySelectorAll('.acc').forEach(acc=>{
   /* preloader curtain */
   const loader=document.getElementById('loader');
   if(loader){
-    if(reduceM){ loader.classList.add('done'); }
+    const finishLoader=()=>loader.classList.add('done');
+    if(reduceM){ finishLoader(); }
     else{
-      window.addEventListener('load',()=>setTimeout(()=>loader.classList.add('done'),1250));
-      setTimeout(()=>loader.classList.add('done'),2800); /* fallback if load is slow */
+      window.addEventListener('load',()=>setTimeout(finishLoader,520),{once:true});
+      setTimeout(finishLoader,1650);
     }
-    setTimeout(()=>{loader.style.display='none';},4200);
+    loader.addEventListener('transitionend',()=>{loader.style.display='none';},{once:true});
+    setTimeout(()=>{loader.style.display='none';},2800);
   }
 
   /* scroll progress bar */
