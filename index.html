@@ -1036,9 +1036,15 @@
   }
   .gallery__main.is-video::before,
   .gallery__main.is-video::after,
-  .gallery__main.is-video .gallery__hint,
+  .gallery__main.is-video .gallery__hint{display:none}
   .gallery__main.is-video .hero__depth{
-    display:none;
+    display:flex;
+    z-index:5;
+  }
+  .gallery__main.is-video .hero__depth span{
+    background:rgba(23,18,15,.48);
+    border-color:rgba(232,201,164,.36);
+    color:#F8E7D0;
   }
   .gallery__main.is-video video{
     left:0;
@@ -1380,9 +1386,9 @@
 
   /* ===== Pure wood CTAs and reliable sticky buy bar ===== */
   .atc,.buynow,.btn-ghost,.stick .atc,.foot__news button{
-    background-image:url('https://fableroom.com/cdn/shop/files/FRST00017A_7.png?width=1200') !important;
-    background-size:cover !important;
-    background-position:center !important;
+    background-image:url('https://fableroom.com/cdn/shop/files/FRST00017A_8.png?width=1200') !important;
+    background-size:260% !important;
+    background-position:center 58% !important;
     background-repeat:no-repeat !important;
     background-color:#5f3a24 !important;
     color:#fff !important;
@@ -1394,7 +1400,7 @@
     display:none !important;
   }
   .atc:hover,.buynow:hover,.btn-ghost:hover,.stick .atc:hover,.foot__news button:hover{
-    background-image:url('https://fableroom.com/cdn/shop/files/FRST00017A_7.png?width=1200') !important;
+    background-image:url('https://fableroom.com/cdn/shop/files/FRST00017A_8.png?width=1200') !important;
     filter:saturate(1.08) contrast(1.04);
   }
   .stick{
@@ -1420,6 +1426,63 @@
   }
   .atc,.stick .atc{
     letter-spacing:.14em;
+  }
+
+  .catalogue-strip{
+    background:var(--bone-warm);
+    padding:72px 0 84px;
+    overflow:hidden;
+  }
+  .catalogue-strip__head{
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
+    gap:24px;
+    margin-bottom:26px;
+  }
+  .catalogue-strip__head h2{
+    font-family:var(--serif);
+    font-size:clamp(30px,4vw,48px);
+    font-weight:500;
+    line-height:1.04;
+    color:var(--ink);
+  }
+  .catalogue-strip__head p{
+    max-width:340px;
+    color:var(--taupe);
+    font-size:14px;
+  }
+  .catalogue-rail{
+    display:flex;
+    gap:18px;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    padding:4px 0 12px;
+  }
+  .catalogue-rail::-webkit-scrollbar{height:6px}
+  .catalogue-rail::-webkit-scrollbar-thumb{background:var(--brass);border-radius:999px}
+  .catalogue-card{
+    flex:0 0 min(340px,78vw);
+    aspect-ratio:4/5;
+    scroll-snap-align:start;
+    overflow:hidden;
+    background:#fff;
+  }
+  .catalogue-card img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+  }
+  @media(max-width:720px){
+    .catalogue-strip{
+      padding:54px 0 64px;
+    }
+    .catalogue-strip__head{
+      display:block;
+    }
+    .catalogue-strip__head p{
+      margin-top:12px;
+    }
   }
 </style>
 </head>
@@ -1462,9 +1525,9 @@
         <div class="hero__scrim"></div>
         <span class="gallery__hint">Tap &amp; hold to zoom</span>
         <div class="hero__depth" aria-hidden="true">
-          <span>Walnut grain</span>
-          <span>Carved face</span>
-          <span>Brass pull</span>
+          <span>Only at FABLEROOM</span>
+          <span>Solid mango wood</span>
+          <span>Walnut finish</span>
         </div>
         <div class="hero__title">
           <span class="eyebrow">Only at FABLEROOM</span>
@@ -1727,6 +1790,28 @@
           <a href="#" class="closing__link">Explore the collection</a>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ORIGINAL PRODUCT CATALOGUE -->
+<section class="catalogue-strip" id="catalogue" data-priority-block>
+  <div class="wrap">
+    <div class="catalogue-strip__head">
+      <div>
+        <span class="eyebrow">Original catalogue</span>
+        <h2>See the Monit piece<br>from every angle.</h2>
+      </div>
+      <p>Swipe through the original catalogue images with different product views and room backgrounds.</p>
+    </div>
+    <div class="catalogue-rail" aria-label="Original product catalogue images">
+      <figure class="catalogue-card"><img src="https://fableroom.com/cdn/shop/files/FRST00017A_1.png?width=900" alt="Monit bedside table front catalogue image"></figure>
+      <figure class="catalogue-card"><img src="https://fableroom.com/cdn/shop/files/FRST00017A_2.png?width=900" alt="Monit bedside table angled catalogue image"></figure>
+      <figure class="catalogue-card"><img src="https://fableroom.com/cdn/shop/files/FRST00017A_3.png?width=900" alt="Monit bedside table drawer catalogue image"></figure>
+      <figure class="catalogue-card"><img src="https://fableroom.com/cdn/shop/files/FRST00017A_4.png?width=900" alt="Monit bedside table brass handle catalogue image"></figure>
+      <figure class="catalogue-card"><img src="https://fableroom.com/cdn/shop/files/FRST00017A_5.png?width=900" alt="Monit bedside table styled room catalogue image"></figure>
+      <figure class="catalogue-card"><img src="https://fableroom.com/cdn/shop/files/FRST00017A_7.png?width=900" alt="Monit bedside table walnut top catalogue image"></figure>
+      <figure class="catalogue-card"><img src="https://fableroom.com/cdn/shop/files/FRST00017A_8.png?width=900" alt="Monit bedside table wood detail catalogue image"></figure>
     </div>
   </div>
 </section>
