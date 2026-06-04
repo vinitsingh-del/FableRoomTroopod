@@ -1618,6 +1618,8 @@
 
   /* ===== Trust video, hero anchor and savings section ===== */
   .trustbar{
+    position:relative;
+    z-index:0;
     min-height:520px;
     display:grid;
     place-items:center;
@@ -1642,6 +1644,7 @@
     object-fit:cover;
     object-position:center;
     filter:saturate(.96) contrast(1.02);
+    pointer-events:none;
   }
   .trustbar__inner{
     position:relative;
@@ -1838,6 +1841,8 @@
   .gallery__main.hero-original{
     aspect-ratio:9/16;
     cursor:default;
+    position:relative;
+    isolation:isolate;
     background:#ECEAE5;
     border:0;
     border-radius:18px;
@@ -1859,11 +1864,23 @@
   }
   .gallery__main.hero-original video{
     position:absolute;
-    inset:0;
-    left:0;
-    z-index:1;
+    left:-9999px;
+    top:0;
+    z-index:-1;
     display:block;
-    max-width:100%;
+    width:1px;
+    height:1px;
+    opacity:0;
+    pointer-events:none;
+    background:#ECEAE5;
+  }
+  .gallery__main.hero-original canvas{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    display:block;
+    z-index:1;
     background:#ECEAE5;
   }
   .gallery__main.hero-original.zoom img{
@@ -1875,27 +1892,35 @@
     background:linear-gradient(to top,rgba(23,18,15,.38) 0%,rgba(23,18,15,.1) 36%,rgba(23,18,15,0) 66%);
   }
   .gallery__main.hero-original .hero__title{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
     display:block !important;
     opacity:1 !important;
     transform:none !important;
     padding:0 44px 52px;
-    z-index:5;
+    z-index:12;
+    color:#fff;
     pointer-events:none;
   }
   .gallery__main.hero-original .hero__title .eyebrow{
+    display:block;
     color:#F2D4A7;
     font-size:12px;
     letter-spacing:.34em;
     margin-bottom:18px;
-    font-weight:700;
+    font-weight:800;
+    text-shadow:0 0 18px rgba(255,248,234,.38),0 8px 28px rgba(0,0,0,.42);
   }
   .gallery__main.hero-original .hero__title h1{
+    font-family:var(--serif);
     font-size:clamp(58px,5.2vw,86px);
     line-height:1.02;
     font-weight:500;
     max-width:8.8ch;
     color:#fff;
-    text-shadow:0 0 22px rgba(255,248,234,.34),0 14px 42px rgba(0,0,0,.36);
+    text-shadow:0 0 24px rgba(255,248,234,.4),0 16px 46px rgba(0,0,0,.48);
   }
   @media(min-width:981px){
     .pdp:has(.gallery__main.hero-original){
@@ -1906,14 +1931,14 @@
       padding:34px 0 72px;
     }
     .gallery:has(.gallery__main.hero-original){
-      width:min(620px,42vw);
+      width:min(620px,42vw,calc(56.25svh - 101px));
       justify-self:end;
       position:relative;
       top:auto;
     }
     .gallery__main.hero-original{
-      max-height:calc(100svh - 70px);
-      min-height:680px;
+      max-height:none;
+      min-height:0;
     }
   }
   @media(max-width:720px){
@@ -1973,14 +1998,15 @@
     <div class="gallery">
       <div class="gallery__main reveal hero-original">
         <video id="heroAttachedVideo" autoplay muted loop playsinline preload="auto" aria-label="Monit Two Drawer Bedside Table hero video">
-          <source src="assets/hero-attached-original.mp4?v=hero-title-fixed" type="video/mp4">
+          <source src="assets/hero-attached-original.mp4?v=attached-hero-locked" type="video/mp4">
         </video>
+        <canvas id="heroCanvas" aria-hidden="true"></canvas>
         <div class="hero__scrim"></div>
-        <span class="gallery__hint">Tap and hold to zoom</span>
-        <div class="hero__title">
+        <div class="hero__title hero__title--float">
           <span class="eyebrow">Only at FABLEROOM</span>
           <h1>Monit Two Drawer<br>Bedside Table</h1>
         </div>
+        <span class="gallery__hint">Tap and hold to zoom</span>
       </div>
     </div>
 
@@ -2348,12 +2374,54 @@ updateStickyBar();
 
 /* ---- Attached hero video is locked to the hero frame ---- */
 const heroAttachedVideo=document.getElementById('heroAttachedVideo');
+const heroCanvas=document.getElementById('heroCanvas');
 const stage=document.querySelector('.gallery__main');
 if(stage && heroAttachedVideo){
   stage.classList.remove('zoom','is-video');
   heroAttachedVideo.style.transform='';
   heroAttachedVideo.style.transformOrigin='center';
   heroAttachedVideo.play().catch(()=>{});
+}
+if(heroAttachedVideo && heroCanvas){
+  const ctx=heroCanvas.getContext('2d');
+  let heroCanvasRunning=false;
+  function sizeHeroCanvas(){
+    const r=heroCanvas.getBoundingClientRect();
+    const dpr=Math.min(2,window.devicePixelRatio||1);
+    const w=Math.max(1,Math.round(r.width*dpr));
+    const h=Math.max(1,Math.round(r.height*dpr));
+    if(heroCanvas.width!==w || heroCanvas.height!==h){
+      heroCanvas.width=w;
+      heroCanvas.height=h;
+    }
+    return {cssW:r.width,cssH:r.height,dpr};
+  }
+  function drawHeroFrame(){
+    if(!ctx) return;
+    const {cssW,cssH,dpr}=sizeHeroCanvas();
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.clearRect(0,0,cssW,cssH);
+    const vw=heroAttachedVideo.videoWidth;
+    const vh=heroAttachedVideo.videoHeight;
+    if(vw && vh){
+      const scale=Math.max(cssW/vw,cssH/vh);
+      const sw=cssW/scale;
+      const sh=cssH/scale;
+      const sx=(vw-sw)/2;
+      const sy=(vh-sh)/2;
+      ctx.drawImage(heroAttachedVideo,sx,sy,sw,sh,0,0,cssW,cssH);
+    }
+    requestAnimationFrame(drawHeroFrame);
+  }
+  function startHeroCanvas(){
+    if(heroCanvasRunning) return;
+    heroCanvasRunning=true;
+    drawHeroFrame();
+  }
+  heroAttachedVideo.addEventListener('loadedmetadata',startHeroCanvas,{once:true});
+  heroAttachedVideo.addEventListener('play',startHeroCanvas);
+  window.addEventListener('resize',sizeHeroCanvas,{passive:true});
+  if(heroAttachedVideo.readyState>=1) startHeroCanvas();
 }
 
 /* ---- Qty ---- */
