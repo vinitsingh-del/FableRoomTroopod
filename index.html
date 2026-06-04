@@ -1690,40 +1690,62 @@
     letter-spacing:.2em;
     text-shadow:0 2px 18px rgba(0,0,0,.58);
   }
-  .trust:nth-child(1){--trust:0}
-  .trust:nth-child(2){--trust:1}
-  .trust:nth-child(3){--trust:2}
-  .trust:nth-child(4){--trust:3}
-  .trust:nth-child(5){--trust:4}
+  .trustbar .trust,
+  .trustbar .trustbar__save{
+    transition-delay:0s !important;
+  }
   .trust__mark{
     opacity:0;
     transform:scaleX(0);
     transform-origin:center;
     transition:opacity .55s ease,transform .7s var(--ease);
-    transition-delay:calc(var(--trust,0) * .14s);
   }
   .trust.in .trust__mark{
     opacity:1;
     transform:scaleX(1);
+    animation:trustMarkGlow 3.2s ease-in-out .25s infinite;
   }
   .trust__word{
     display:inline-block;
     opacity:0;
-    transform:translateY(12px);
+    transform:translateY(8px);
     filter:blur(5px);
     transition:opacity .55s ease,transform .72s var(--ease-soft),filter .72s ease;
-    transition-delay:calc((var(--trust,0) * .14s) + (var(--word,0) * .085s) + .08s);
+    transition-delay:0s;
+    will-change:transform,text-shadow;
   }
   .trust.in .trust__word{
     opacity:1;
     transform:none;
     filter:blur(0);
+    animation:trustGlowShake 3.2s ease-in-out .25s infinite;
   }
-  .trust__word:nth-child(1){--word:0}
-  .trust__word:nth-child(2){--word:1}
-  .trust__word:nth-child(3){--word:2}
-  .trust__word:nth-child(4){--word:3}
-  .trust__word:nth-child(5){--word:4}
+  @keyframes trustGlowShake{
+    0%,100%{
+      transform:translate3d(0,0,0);
+      text-shadow:0 2px 18px rgba(0,0,0,.58),0 0 0 rgba(232,201,164,0);
+    }
+    10%{transform:translate3d(.7px,-.4px,0)}
+    14%{transform:translate3d(-.7px,.35px,0)}
+    18%{transform:translate3d(.45px,.15px,0)}
+    24%{
+      transform:translate3d(0,0,0);
+      text-shadow:0 2px 18px rgba(0,0,0,.58),0 0 16px rgba(232,201,164,.55),0 0 34px rgba(255,248,234,.2);
+    }
+    44%{text-shadow:0 2px 18px rgba(0,0,0,.58),0 0 8px rgba(232,201,164,.28)}
+    72%{text-shadow:0 2px 18px rgba(0,0,0,.58),0 0 20px rgba(232,201,164,.38)}
+  }
+  @keyframes trustMarkGlow{
+    0%,100%{box-shadow:0 0 0 rgba(232,201,164,0)}
+    24%{box-shadow:0 0 16px rgba(232,201,164,.5)}
+    72%{box-shadow:0 0 10px rgba(232,201,164,.32)}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .trust.in .trust__word,
+    .trust.in .trust__mark{
+      animation:none;
+    }
+  }
   .trust:nth-child(5){
     grid-column:1 / -1;
     max-width:300px;
