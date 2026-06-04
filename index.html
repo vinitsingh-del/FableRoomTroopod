@@ -1858,9 +1858,9 @@
     transform:none !important;
   }
   .gallery__main.hero-original video{
-    position:relative;
-    inset:auto;
-    left:auto;
+    position:absolute;
+    inset:0;
+    left:0;
     z-index:1;
     display:block;
     max-width:100%;
@@ -1871,14 +1871,16 @@
   }
   .gallery__main.hero-original .hero__scrim{
     display:block;
+    z-index:2;
     background:linear-gradient(to top,rgba(23,18,15,.38) 0%,rgba(23,18,15,.1) 36%,rgba(23,18,15,0) 66%);
   }
   .gallery__main.hero-original .hero__title{
-    display:block;
-    opacity:1;
-    transform:none;
+    display:block !important;
+    opacity:1 !important;
+    transform:none !important;
     padding:0 44px 52px;
-    z-index:4;
+    z-index:5;
+    pointer-events:none;
   }
   .gallery__main.hero-original .hero__title .eyebrow{
     color:#F2D4A7;
@@ -1970,15 +1972,15 @@
     <!-- Gallery -->
     <div class="gallery">
       <div class="gallery__main reveal hero-original">
+        <video id="heroAttachedVideo" autoplay muted loop playsinline preload="auto" aria-label="Monit Two Drawer Bedside Table hero video">
+          <source src="assets/hero-attached-original.mp4?v=hero-title-fixed" type="video/mp4">
+        </video>
         <div class="hero__scrim"></div>
         <span class="gallery__hint">Tap and hold to zoom</span>
         <div class="hero__title">
           <span class="eyebrow">Only at FABLEROOM</span>
           <h1>Monit Two Drawer<br>Bedside Table</h1>
         </div>
-        <video id="heroAttachedVideo" autoplay muted loop playsinline preload="auto" aria-label="Monit Two Drawer Bedside Table hero video">
-          <source src="assets/hero-attached-original.mp4?v=attached-hero" type="video/mp4">
-        </video>
       </div>
     </div>
 
