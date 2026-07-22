@@ -2524,6 +2524,7 @@ if(stage && heroAttachedVideo){
 }
 if(heroAttachedVideo && heroCanvas){
   const ctx=heroCanvas.getContext('2d');
+  const heroDesktopQuery=window.matchMedia ? window.matchMedia('(min-width:981px)') : {matches:false};
   let heroCanvasRunning=false;
   let heroCanvasVisible=true;
   let heroFrameId=0;
@@ -2550,10 +2551,14 @@ if(heroAttachedVideo && heroCanvas){
     const vh=heroAttachedVideo.videoHeight;
     if(vw && vh){
       const scale=Math.max(cssW/vw,cssH/vh);
-      const sw=cssW/scale;
-      const sh=cssH/scale;
-      const sx=(vw-sw)/2;
-      const sy=(vh-sh)/2;
+      const heroFrameZoom=heroDesktopQuery.matches ? 1.16 : 1;
+      const sw=(cssW/scale)/heroFrameZoom;
+      const sh=(cssH/scale)/heroFrameZoom;
+      const cropRoomX=Math.max(0,vw-sw);
+      const cropRoomY=Math.max(0,vh-sh);
+      const focusX=heroDesktopQuery.matches ? .78 : .5;
+      const sx=Math.min(cropRoomX,Math.max(0,cropRoomX*focusX));
+      const sy=Math.min(cropRoomY,Math.max(0,cropRoomY*.5));
       ctx.drawImage(heroAttachedVideo,sx,sy,sw,sh,0,0,cssW,cssH);
     }
     heroFrameId=requestAnimationFrame(drawHeroFrame);
