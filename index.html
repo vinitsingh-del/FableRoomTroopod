@@ -2052,17 +2052,25 @@
   }
   @media(min-width:981px){
     .pdp:has(.gallery__main.hero-original){
-      grid-template-columns:minmax(460px,620px) minmax(520px,680px);
-      justify-content:center;
+      --hero-desktop-w:min(620px,42vw,calc(56.25svh - 101px));
+      grid-template-columns:minmax(0,1fr) var(--hero-desktop-w) minmax(0,1fr);
+      justify-content:stretch;
       align-items:center;
-      gap:86px;
+      gap:48px;
       padding:34px 0 72px;
     }
     .gallery:has(.gallery__main.hero-original){
-      width:min(620px,42vw,calc(56.25svh - 101px));
-      justify-self:end;
+      grid-column:2;
+      width:var(--hero-desktop-w);
+      justify-self:center;
       position:relative;
       top:auto;
+    }
+    .pdp:has(.gallery__main.hero-original) .buy{
+      grid-column:3;
+      justify-self:end;
+      width:100%;
+      max-width:520px;
     }
     .gallery__main.hero-original{
       max-height:none;
